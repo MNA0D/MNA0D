@@ -1,0 +1,12 @@
+[package]
+name = "mna"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rdev = "0.5.3"
+hyper = "0.14"
+winit = "0.25"
+image = "0.23"
