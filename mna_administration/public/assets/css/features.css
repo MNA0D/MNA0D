@@ -140,3 +140,26 @@
 .visiualisation:hover {
     transform: translateY(-5px);
 }
+
+.features-box-white {
+    padding: 1rem;
+    margin: 1rem;
+}
+
+.width-box {
+    width: 335px;
+    max-height: 30rem;
+    height: 29rem !important;
+}
+
+.btn-end {
+    width: 80%;
+}
+
+.btn-div {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    padding-bottom: 10px;
+}
