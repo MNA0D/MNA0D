@@ -6,9 +6,17 @@
 html {
   height: -webkit-fill-available;
 } */
+body,
+html,
+.container-fluid,
+.row b-example-divider {
+  overflow-x: hidden;
+  width: 100%;
+}
 
 #sidebar {
-  left: -13px;
+  z-index: 1000 !important;
+  left: 0px;
   position: fixed;
   display: flex;
   flex-wrap: nowrap;
@@ -20,6 +28,9 @@ html {
 }
 
 .b-example-divider {
+  position: absolute;
+  left: 0px !important;
+  right: 0px !important;
   flex-shrink: 0;
   width: 1.5rem;
   height: 100vh;
@@ -98,4 +109,88 @@ html {
 
 .lh-tight {
   line-height: 1.25;
+}
+
+#header {
+  display: none !important;
+}
+
+#sidebar-element {
+  width: 280px;
+}
+
+@media (max-width: 1300px) {
+  #sidebar-element {
+    width: 227px !important;
+  }
+}
+
+@media (max-width: 991.98px) {
+  #sidebar-element {
+    width: auto !important;
+  }
+
+  #sidebar-collapse {
+    z-index: 1000 !important;
+    left: 0px;
+    position: fixed;
+    display: flex !important;
+    flex-wrap: nowrap;
+    height: 100vh;
+    height: -webkit-fill-available;
+    max-height: 100vh;
+
+  }
+
+  #user {
+    display: none;
+  }
+
+  #sidebar {
+    visibility: hidden;
+  }
+
+
+}
+
+@media (max-width: 320px) {
+  #sidebar-collapse {
+    display: none !important;
+  }
+
+  #user {
+    display: none;
+  }
+
+  #sidebar {
+    visibility: hidden;
+  }
+
+
+}
+
+@media (max-width: 600px) {
+  #sidebar-collapse {
+    display: none !important;
+  }
+
+  #user {
+    display: none !important;
+  }
+
+  #sidebar {
+    visibility: hidden;
+  }
+
+  #header {
+    z-index: 1000 !important;
+    left: 0px !important;
+    right: 0px !important;
+    position: fixed !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    max-height: 4.5rem;
+  }
+
+
 }

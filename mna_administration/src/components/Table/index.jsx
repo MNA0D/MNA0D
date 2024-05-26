@@ -4,14 +4,14 @@ function Table() {
     return (
         <>
             <link href="/assets/css/dashboard.css" rel="stylesheet" />
-            <div className="col py-3 main-content">
+            <div className="col">
 
 
-                <div className='container-fluid'>
+                <div className='container'>
 
                     <div className='row'>
 
-                        <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="table">
+                        <main className="col" id="table">
 
                             <h2>Section title</h2>
                             <div className="table-responsive">

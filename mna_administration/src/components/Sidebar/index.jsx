@@ -1,18 +1,69 @@
 import React from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import User from './user';
 
-function navbar() {
+function Sidebar() {
   return (
     <>
       <link href="/assets/css/sidebars.css" rel="stylesheet"></link>
 
       {/* col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark */}
-      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0">
+
+      < div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 " >
+        <main >
+          <header class="d-flex justify-content-center py-3 bg-dark" id="header" style={{ display: 'none' }}>
+            <ul class="nav nav-pills">
+              <li class="nav-item"><a href="#" class="nav-link active">Dashboard</a></li>
+              <li class="nav-item"><a href="#" class="nav-link">Liste</a></li>
+              <li class="nav-item"><a href="#" class="nav-link">Nouveau</a></li>
+              <li class="nav-item"><a href="#" class="nav-link">Documentation</a></li>
+              <li class="nav-item"><a href="#" class="nav-link" aria-current="page">Déconnexion</a></li>
+              <li class="nav-item"><a href="#" class="nav-link" aria-current="page"><User /></a></li>
+            </ul>
+          </header >
+        </main>
 
 
-        <main class="" id="sidebar">
-          <h1 className="visually-hidden">Sidebars examples</h1>
-          <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style={{ width: '280px' }}>
+        <main class="" id="sidebar-collapse" style={{ display: 'none' }}>
+          <div class="d-flex flex-column flex-shrink-0 bg-dark" style={{ width: '4.5rem' }}>
+
+            <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+              <li class="nav-item">
+                <a href="#" class="nav-link active py-3 border-bottom" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
+                  <i class="bi me-2 bi-house"></i>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link py-3 border-bottom" title="Dashboard" data-bs-toggle="tooltip" data-bs-placement="right">
+                  <i class="bi me-2 bi-activity"></i>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link py-3 border-bottom" title="Orders" data-bs-toggle="tooltip" data-bs-placement="right">
+                  <i class="bi me-2 bi-cup-hot"></i>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link py-3 border-bottom" title="Products" data-bs-toggle="tooltip" data-bs-placement="right">
+                  <i class="bi me-2 bi-magic"></i>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-link py-3 border-bottom" title="Customers" data-bs-toggle="tooltip" data-bs-placement="right">
+                  <i class="bi me-2 bi-folder"></i>
+                </a>
+              </li>
+            </ul>
+            <div class="dropdown border-top">
+
+              <User />
+
+            </div>
+          </div>
+        </main>
+
+        <main id="sidebar">
+          <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style={{ width: '280px' }} id="sidebar-element">
             <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
               <p class="me-2"></p>
               <span className="fs-4">MNA0D</span>
@@ -48,23 +99,16 @@ function navbar() {
             </ul>
             <hr></hr>
             <div className="dropdown">
-              <a href="#" className="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/naywvi.png" alt="" width="32" height="32" className="rounded-circle me-2" />
-                <strong>User</strong>
-              </a>
-              <ul className="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                <li><a className="dropdown-item" href="#">Parametres</a></li>
-                <li><a className="dropdown-item" href="#">Profil</a></li>
-                <li><hr className="dropdown-divider"></hr></li>
-                <li><a className="dropdown-item" href="#">Deconnexion</a></li>
-              </ul>
+
+              <User />
+
             </div>
           </div>
         </main>
-      </div>
+
+      </div >
       <script src="/assets/js/sidebars.js"></script>
     </>
   )
 }
-
-export default navbar;
+export default Sidebar;
