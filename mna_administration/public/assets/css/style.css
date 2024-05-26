@@ -1,0 +1,7 @@
+.no-line {
+    text-decoration: none;
+}
+
+.no-line:hover {
+    opacity: 0.8;
+}

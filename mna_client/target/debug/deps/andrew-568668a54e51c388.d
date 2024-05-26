@@ -1,0 +1,12 @@
+/home/nagib/Desktop/MNA0D/mna/target/debug/deps/libandrew-568668a54e51c388.rmeta: /home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/lib.rs /home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/line.rs /home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/shapes/mod.rs /home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/shapes/rectangle.rs /home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/text/mod.rs /home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/text/fontconfig.rs
+
+/home/nagib/Desktop/MNA0D/mna/target/debug/deps/libandrew-568668a54e51c388.rlib: /home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/lib.rs /home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/line.rs /home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/shapes/mod.rs /home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/shapes/rectangle.rs /home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/text/mod.rs /home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/text/fontconfig.rs
+
+/home/nagib/Desktop/MNA0D/mna/target/debug/deps/andrew-568668a54e51c388.d: /home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/lib.rs /home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/line.rs /home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/shapes/mod.rs /home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/shapes/rectangle.rs /home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/text/mod.rs /home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/text/fontconfig.rs
+
+/home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/lib.rs:
+/home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/line.rs:
+/home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/shapes/mod.rs:
+/home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/shapes/rectangle.rs:
+/home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/text/mod.rs:
+/home/nagib/.cargo/registry/src/index.crates.io-6f17d22bba15001f/andrew-0.3.1/src/text/fontconfig.rs:
