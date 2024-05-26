@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 function User() {
     return (
@@ -8,12 +9,11 @@ function User() {
                 <strong id="user">User</strong>
             </a>
             <ul className="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                <li><a className="dropdown-item" href="#">Parametres</a></li>
-                <li><a className="dropdown-item" href="#">Profil</a></li>
-                <li><hr className="dropdown-divider"></hr></li>
-                <li><a className="dropdown-item" href="#">Deconnexion</a></li>
+                <li><NavLink className="dropdown-item" to="/settings">Parametres</NavLink></li>
+                <li><NavLink className="dropdown-item" to="/profile">Profil</NavLink></li>
+                <li><hr className="dropdown-divider" /></li>
+                <li><NavLink className="dropdown-item" to="/logout">Deconnexion</NavLink></li>
             </ul>
-
         </>
     );
 }

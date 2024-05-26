@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import User from './user';
 
@@ -7,57 +8,50 @@ function Sidebar() {
     <>
       <link href="/assets/css/sidebars.css" rel="stylesheet"></link>
 
-      {/* col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark */}
-
       < div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 " >
-        <main >
-          <header class="d-flex justify-content-center py-3 bg-dark" id="header" style={{ display: 'none' }}>
-            <ul class="nav nav-pills">
-              <li class="nav-item"><a href="#" class="nav-link active">Dashboard</a></li>
-              <li class="nav-item"><a href="#" class="nav-link">Liste</a></li>
-              <li class="nav-item"><a href="#" class="nav-link">Nouveau</a></li>
-              <li class="nav-item"><a href="#" class="nav-link">Documentation</a></li>
-              <li class="nav-item"><a href="#" class="nav-link" aria-current="page">Déconnexion</a></li>
-              <li class="nav-item"><a href="#" class="nav-link" aria-current="page"><User /></a></li>
+        <main>
+          <header className="d-flex justify-content-center py-3 bg-dark" id="header" style={{ display: 'none' }}>
+            <ul className="nav nav-pills">
+              <li className="nav-item"><NavLink to="/dashboard" className="nav-link">Dashboard</NavLink></li>
+              <li className="nav-item"><NavLink to="/list" className="nav-link">Liste</NavLink></li>
+              <li className="nav-item"><NavLink to="/new-client" className="nav-link">Nouveau</NavLink></li>
+              <li className="nav-item"><NavLink to="/documentation" className="nav-link">Documentation</NavLink></li>
+              <li className="nav-item"><User /></li>
             </ul>
-          </header >
+          </header>
         </main>
 
-
-        <main class="" id="sidebar-collapse" style={{ display: 'none' }}>
-          <div class="d-flex flex-column flex-shrink-0 bg-dark" style={{ width: '4.5rem' }}>
-
-            <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-              <li class="nav-item">
-                <a href="#" class="nav-link active py-3 border-bottom" aria-current="page" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
-                  <i class="bi me-2 bi-house"></i>
-                </a>
+        <main id="sidebar-collapse" style={{ display: 'none' }}>
+          <div className="d-flex flex-column flex-shrink-0 bg-dark" style={{ width: '4.5rem' }}>
+            <ul className="nav nav-pills nav-flush flex-column mb-auto text-center">
+              <li className="nav-item">
+                <NavLink to="/" className="nav-link py-3 border-bottom" title="Home" data-bs-toggle="tooltip" data-bs-placement="right">
+                  <i className="bi me-2 bi-house"></i>
+                </NavLink>
               </li>
               <li>
-                <a href="#" class="nav-link py-3 border-bottom" title="Dashboard" data-bs-toggle="tooltip" data-bs-placement="right">
-                  <i class="bi me-2 bi-activity"></i>
-                </a>
+                <NavLink to="/dashboard" className="nav-link py-3 border-bottom" title="Dashboard" data-bs-toggle="tooltip" data-bs-placement="right">
+                  <i className="bi me-2 bi-activity"></i>
+                </NavLink>
               </li>
               <li>
-                <a href="#" class="nav-link py-3 border-bottom" title="Orders" data-bs-toggle="tooltip" data-bs-placement="right">
-                  <i class="bi me-2 bi-cup-hot"></i>
-                </a>
+                <NavLink to="/orders" className="nav-link py-3 border-bottom" title="Orders" data-bs-toggle="tooltip" data-bs-placement="right">
+                  <i className="bi me-2 bi-cup-hot"></i>
+                </NavLink>
               </li>
               <li>
-                <a href="#" class="nav-link py-3 border-bottom" title="Products" data-bs-toggle="tooltip" data-bs-placement="right">
-                  <i class="bi me-2 bi-magic"></i>
-                </a>
+                <NavLink to="/products" className="nav-link py-3 border-bottom" title="Products" data-bs-toggle="tooltip" data-bs-placement="right">
+                  <i className="bi me-2 bi-magic"></i>
+                </NavLink>
               </li>
               <li>
-                <a href="#" class="nav-link py-3 border-bottom" title="Customers" data-bs-toggle="tooltip" data-bs-placement="right">
-                  <i class="bi me-2 bi-folder"></i>
-                </a>
+                <NavLink to="/customers" className="nav-link py-3 border-bottom" title="Customers" data-bs-toggle="tooltip" data-bs-placement="right">
+                  <i className="bi me-2 bi-folder"></i>
+                </NavLink>
               </li>
             </ul>
-            <div class="dropdown border-top">
-
+            <div className="dropdown border-top">
               <User />
-
             </div>
           </div>
         </main>
@@ -65,50 +59,48 @@ function Sidebar() {
         <main id="sidebar">
           <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style={{ width: '280px' }} id="sidebar-element">
             <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-              <p class="me-2"></p>
+              <p className="me-2"></p>
               <span className="fs-4">MNA0D</span>
             </a>
-            <hr></hr>
+            <hr />
             <ul className="nav nav-pills flex-column mb-auto">
               <li className="nav-item">
-                <a href="#" className="nav-link active" aria-current="page">
-                  <i class="bi me-2 bi-house"></i>
+                <NavLink to="/" className="nav-link text-white" aria-current="page">
+                  <i className="bi me-2 bi-house"></i>
                   Acceuil
-                </a>
+                </NavLink>
               </li>
               <li>
-                <a href="#" className="nav-link text-white">
-                  <i class="bi me-2 bi-activity"></i>  Dashboard
-                </a>
+                <NavLink to="/dashboard" className="nav-link text-white">
+                  <i className="bi me-2 bi-activity"></i> Dashboard
+                </NavLink>
               </li>
               <li>
-                <a href="#" className="nav-link text-white">
-                  <i class="bi me-2 bi-cup-hot"></i>    Liste des victimes
-                </a>
+                <NavLink to="/list" className="nav-link text-white">
+                  <i className="bi me-2 bi-cup-hot"></i> Liste des victimes
+                </NavLink>
               </li>
               <li>
-                <a href="#" className="nav-link text-white">
-                  <i class="bi me-2 bi-magic"></i>  Crée un nouveau client
-                </a>
+                <NavLink to="/new-client" className="nav-link text-white">
+                  <i className="bi me-2 bi-magic"></i> Crée un nouveau client
+                </NavLink>
               </li>
               <li>
-                <a href="#" className="nav-link text-white">
-                  <i class="bi me-2 bi-folder"></i>  Documentation
-                </a>
+                <NavLink to="/documentation" className="nav-link text-white">
+                  <i className="bi me-2 bi-folder"></i> Documentation
+                </NavLink>
               </li>
             </ul>
-            <hr></hr>
+            <hr />
             <div className="dropdown">
-
               <User />
-
             </div>
           </div>
         </main>
-
-      </div >
+      </div>
       <script src="/assets/js/sidebars.js"></script>
     </>
-  )
+  );
 }
+
 export default Sidebar;

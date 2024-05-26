@@ -1,11 +1,11 @@
 import React from 'react';
 
-function Dasboard() {
+function Home() {
   return (
     <>
-
+      Home
     </>
   )
 }
 
-export default Dasboard;
+export default Home;
