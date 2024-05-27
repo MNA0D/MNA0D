@@ -1,37 +1,49 @@
-import React, { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { Modal, Button, Form } from 'react-bootstrap';
+import React from 'react';
+import './awesonicon.css';
 
-import ProfileModal from "../Modals/Profil";
-import { performLogout } from "../Logout";
-
-function User() {
-    const [showModal, setShowModal] = useState(false);
-    const navigate = useNavigate();
-
-    const handleShow = () => setShowModal(true);
-    const handleClose = () => setShowModal(false);
-
-    const handleLogout = () => {
-        performLogout(navigate);
-    };
-
+function Footer() {
     return (
         <>
-            <a href="#" className="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://github.com/naywvi.png" alt="" width="32" height="32" className="rounded-circle me-2" />
-                <strong id="user">User</strong>
-            </a>
-            <ul className="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                <li><NavLink className="dropdown-item" to="/settings">Parametres</NavLink></li>
-                <li><button className="dropdown-item" onClick={handleShow}>Mon Profil</button></li>
-                <li><hr className="dropdown-divider" /></li>
-                <li><button className="dropdown-item" onClick={handleLogout}>Deconnexion</button></li>
-            </ul>
+            <footer className="text-center text-lg-start bg-body-tertiary text-muted">
 
-            <ProfileModal show={showModal} handleClose={handleClose} />
+                <section className="mt-5" id="footer-bg-section-1">
+                    <br></br>
+                    <div className="container text-center text-md-start mt-10">
+                        <div className="row mt-3">
+                            <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                                <h6 className="text-uppercase fw-bold mb-4">
+                                    <i className="fas fa-gem me-3"></i>MNA0D
+                                </h6>
+                                <p>
+                                    Le rat est un animal qui a une très mauvaise réputation. Il est souvent associé à la saleté, à la maladie et à la mort. Pourtant, le rat est un animal fascinant qui mérite d'être mieux connu. C'est pourquoi nous avons créé cette application pour vous permettre de découvrir le rat sous un nouveau jour.
+                                </p>
+                            </div>
+
+
+                            <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                                <h6 className="text-uppercase fw-bold mb-4">Contact</h6>
+                                <p>
+                                    <a href="https://github.com/NAywvi" className="me-4 text-reset">
+                                        <i className="fab fa-github"></i>
+                                    </a> Github
+                                </p>
+                                <p>
+                                    <a href="https://nlkakhdari.fr" className="me-4 text-reset">
+                                        <i className="fas fa-globe"></i>
+                                    </a>
+                                    Mon site web
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <div className="text-center p-4" id="footer-bg-section-2">
+                    © 2024-2025 Copyright :
+                    <a className="text-reset fw-bold" href="http://nlakhdari.fr/"> nlakhdari.fr</a>
+                </div>
+            </footer>
         </>
     );
 }
 
-export default User;
+export default Footer;

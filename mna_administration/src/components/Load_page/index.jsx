@@ -21,6 +21,9 @@ const AppRoutes = () => (
         <Route path="/documentation" element={<Documentation />} />
         <Route path="/new-client" element={<NewClient />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/" element={<Dashboard />} />
+
+
         <Route path="/403" element={<Forbidden />} />
         <Route path="*" element={<NotFound />} />
     </Routes>
