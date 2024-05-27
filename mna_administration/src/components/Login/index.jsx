@@ -7,8 +7,8 @@ function Login() {
       <div className="text-center" id="tbody">
         <main className="form-signin">
           <form>
-            <img className="mb-4" src="https://github.com/naywvi.png" alt="" width="72" height="57" />
-            <h1 className="h3 mb-3 fw-normal">Merci de vous connecter</h1>
+            <img className="mb-4" src="/assets/image/logo.png" alt="" width="150" height="150" />
+            <h1 className="h3 mb-3 fw-normal">Merci de vous connecter pour accéder à MNA0D</h1>
 
             <div className="form-floating">
               <input type="email" className="form-control" id="floatingInput" placeholder="name@example.com" />

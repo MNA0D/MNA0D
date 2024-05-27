@@ -38,7 +38,7 @@ function Footer() {
                     </div>
                 </section>
                 <div className="text-center p-4" id="footer-bg-section-2">
-                    © 2024 Copyright :
+                    © 2024-2025 Copyright :
                     <a className="text-reset fw-bold" href="http://nlakhdari.fr/"> nlakhdari.fr</a>
                 </div>
             </footer>
