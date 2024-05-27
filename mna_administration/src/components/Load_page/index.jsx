@@ -10,6 +10,8 @@ import Features from "../Features";
 import Documentation from '../Documentation';
 import NewClient from '../New_client';
 import Dashboard from '../Dashboard';
+import NotFound from '../ERR@R/404';
+import Forbidden from '../ERR@R/403';
 
 function App() {
     return (
@@ -29,6 +31,8 @@ function App() {
                                     <Route path="/new-client" element={<NewClient />} />
                                     <Route path="/dashboard" element={<Dashboard />} />
                                     <Route path="/" element={<Dashboard />} /> {/* Default route */}
+                                    <Route path="/403" element={<Forbidden />} />
+                                    <Route path="*" element={<NotFound />} />
                                 </Routes>
                                 <Footer />
                             </main>
