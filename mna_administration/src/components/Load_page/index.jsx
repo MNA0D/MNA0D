@@ -13,6 +13,7 @@ import Dashboard from '../Dashboard';
 import NotFound from '../ERR@R/404';
 import Forbidden from '../ERR@R/403';
 import Loading from '../Loading'; // Import du composant de chargement
+import ToastContainer from '../Toast'; // Import du composant de conteneur de toasts
 
 const AppRoutes = () => (
     <Routes>
@@ -22,8 +23,6 @@ const AppRoutes = () => (
         <Route path="/new-client" element={<NewClient />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/" element={<Dashboard />} />
-
-
         <Route path="/403" element={<Forbidden />} />
         <Route path="*" element={<NotFound />} />
     </Routes>
@@ -55,6 +54,7 @@ function App() {
                     <main id="right" className="col col--right">
                         <AppRoutes />
                         <Footer />
+                        <ToastContainer /> {/* Ajout du conteneur de toasts */}
                     </main>
                 </div>
             </div>

@@ -1,0 +1,64 @@
+{
+    "toasts": [
+        {
+            "id": "1",
+            "type": "text",
+            "message": "Simple Text Toast",
+            "background": "bg-primary"
+        },
+        {
+            "id": "2",
+            "type": "notification",
+            "message": "Notification Toast",
+            "background": "bg-warning"
+        },
+        {
+            "id": "3",
+            "type": "action",
+            "message": "Action Required",
+            "background": "bg-success"
+        },
+        {
+            "id": "4",
+            "type": "text",
+            "message": "Another Simple Text Toast",
+            "background": "bg-secondary"
+        },
+        {
+            "id": "5",
+            "type": "notification",
+            "message": "Another Notification",
+            "background": "bg-info"
+        },
+        {
+            "id": "6",
+            "type": "action",
+            "message": "Need Your Attention",
+            "background": "bg-light"
+        },
+        {
+            "id": "7",
+            "type": "text",
+            "message": "More Simple Text Toast",
+            "background": "bg-dark"
+        },
+        {
+            "id": "8",
+            "type": "notification",
+            "message": "Important Notification",
+            "background": "bg-danger"
+        },
+        {
+            "id": "9",
+            "type": "action",
+            "message": "Immediate Action Required",
+            "background": "bg-primary"
+        },
+        {
+            "id": "10",
+            "type": "text",
+            "message": "Yet Another Text Toast",
+            "background": "bg-white"
+        }
+    ]
+}
