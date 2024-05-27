@@ -1,7 +1,19 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import ProfileModal from "../Modals/Profil";
+import { performLogout } from "../Logout"; // Importation correcte de performLogout
 
 function User() {
+    const [showModal, setShowModal] = useState(false);
+    const navigate = useNavigate();
+
+    const handleShow = () => setShowModal(true);
+    const handleClose = () => setShowModal(false);
+
+    const handleLogout = () => {
+        performLogout(navigate);
+    };
+
     return (
         <>
             <a href="#" className="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -10,10 +22,12 @@ function User() {
             </a>
             <ul className="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
                 <li><NavLink className="dropdown-item" to="/settings">Parametres</NavLink></li>
-                <li><NavLink className="dropdown-item" to="/profile">Profil</NavLink></li>
+                <li><button className="dropdown-item" onClick={handleShow}>Mon Profil</button></li>
                 <li><hr className="dropdown-divider" /></li>
-                <li><NavLink className="dropdown-item" to="/logout">Deconnexion</NavLink></li>
+                <li><button className="dropdown-item" onClick={handleLogout}>Deconnexion</button></li>
             </ul>
+
+            <ProfileModal show={showModal} handleClose={handleClose} />
         </>
     );
 }
