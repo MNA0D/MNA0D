@@ -163,7 +163,7 @@ function FormComponent() {
                     </Form>
                 )}
                 <Card className="mt-3">
-                    <Card.Header>Résultat pour leszzz</Card.Header>
+                    <Card.Header>Résultat pour nerds 🤓</Card.Header>
                     <Card.Body>
                         <pre className="m-0">{JSON.stringify(form, null, 2)}</pre>
                     </Card.Body>
