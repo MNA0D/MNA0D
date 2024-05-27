@@ -1,8 +1,12 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 
 function Login() {
   return (
     <>
+      <Helmet>
+        <title>Espace de connexion - MNA0D</title>
+      </Helmet>
       <link href="/assets/css/signin.css" rel="stylesheet" />
       <div className="text-center" id="tbody">
         <main className="form-signin">

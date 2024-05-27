@@ -1,10 +1,14 @@
 import React from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { Helmet } from 'react-helmet';
 import Shell from '../Shell';
 
 function Features() {
     return (
         <>
+            <Helmet>
+                <title>Visualisation - MNA0D</title>
+            </Helmet>
             <link href="/assets/css/features.css" rel="stylesheet" />
 
             <div className="container px-4 py-5" id="hanging-icons">

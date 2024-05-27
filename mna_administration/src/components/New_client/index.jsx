@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, FormGroup, FormControl, FormLabel, Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Helmet } from 'react-helmet';
 
 function FormComponent() {
     const [form, setForm] = useState({
@@ -75,93 +76,100 @@ function FormComponent() {
     };
 
     return (
-        <div>
-            {show && (
-                <Form onSubmit={handleSubmit} onReset={handleReset}>
-                    <FormGroup controlId="input-1">
-                        <FormLabel>Nom du programme:</FormLabel>
-                        <FormControl
-                            type="text"
-                            name="programmeName"
-                            value={form.programmeName}
-                            onChange={handleChange}
-                            placeholder="Entrez le nom du programme"
-                            required
-                        />
-                    </FormGroup>
+        <>
 
-                    <Form.Text className="text-muted">
-                        Le nom du programme doit être unique, il sera utilisé pour générer le client.
-                    </Form.Text>
+            <Helmet>
+                <title>Nouveau client - MNA0D</title>
+            </Helmet>
 
-                    <FormGroup controlId="input-4">
-                        <FormLabel>Programme:</FormLabel>
-                        <FormControl
-                            type="file"
-                            name="programme"
-                            onChange={handleChange}
-                        />
-                    </FormGroup>
-                    <div className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center">
-                        <FormGroup controlId="checkboxes">
-                            <FormLabel>Checkboxes:</FormLabel>
-                            <div className="list-group">
-                                {checkboxes.map((checkbox, index) => (
-                                    <label key={index} className="list-group-item d-flex gap-2">
-                                        <input
-                                            className="form-check-input flex-shrink-0"
-                                            type="checkbox"
-                                            name="checked"
-                                            value={checkbox.label}
-                                            checked={form.checked.includes(checkbox.label)}
-                                            onChange={handleChange}
-                                        />
-                                        <span>
-                                            {checkbox.label}
-                                            <small className="d-block text-body-secondary">{checkbox.description}</small>
-                                        </span>
-                                    </label>
-                                ))}
-                            </div>
+            <div>
+                {show && (
+                    <Form onSubmit={handleSubmit} onReset={handleReset}>
+                        <FormGroup controlId="input-1">
+                            <FormLabel>Nom du programme:</FormLabel>
+                            <FormControl
+                                type="text"
+                                name="programmeName"
+                                value={form.programmeName}
+                                onChange={handleChange}
+                                placeholder="Entrez le nom du programme"
+                                required
+                            />
                         </FormGroup>
 
-                        <FormGroup controlId="radios">
-                            <FormLabel>Radios:</FormLabel>
-                            <div className="list-group">
-                                {radios.map((radio, index) => (
-                                    <label key={index} className="list-group-item d-flex gap-2">
-                                        <input
-                                            className="form-check-input flex-shrink-0"
-                                            type="radio"
-                                            name="radio"
-                                            value={radio.label}
-                                            checked={form.radio === radio.label}
-                                            onChange={handleChange}
-                                        />
-                                        <span>
-                                            {radio.label}
-                                            <small className="d-block text-body-secondary">{radio.description}</small>
-                                        </span>
-                                    </label>
-                                ))}
-                            </div>
+                        <Form.Text className="text-muted">
+                            Le nom du programme doit être unique, il sera utilisé pour générer le client.
+                        </Form.Text>
+
+                        <FormGroup controlId="input-4">
+                            <FormLabel>Programme:</FormLabel>
+                            <FormControl
+                                type="file"
+                                name="programme"
+                                onChange={handleChange}
+                            />
                         </FormGroup>
-                    </div>
-                    <Button type="submit" variant="primary">
-                        Générer le client
-                    </Button>
-                    <Button type="reset" variant="danger" className="ms-2">
-                        Annuler
-                    </Button>
-                </Form>
-            )}
-            <Card className="mt-3">
-                <Card.Header>Résultat pour leszzz</Card.Header>
-                <Card.Body>
-                    <pre className="m-0">{JSON.stringify(form, null, 2)}</pre>
-                </Card.Body>
-            </Card>
-        </div>
+                        <div className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center">
+                            <FormGroup controlId="checkboxes">
+                                <FormLabel>Checkboxes:</FormLabel>
+                                <div className="list-group">
+                                    {checkboxes.map((checkbox, index) => (
+                                        <label key={index} className="list-group-item d-flex gap-2">
+                                            <input
+                                                className="form-check-input flex-shrink-0"
+                                                type="checkbox"
+                                                name="checked"
+                                                value={checkbox.label}
+                                                checked={form.checked.includes(checkbox.label)}
+                                                onChange={handleChange}
+                                            />
+                                            <span>
+                                                {checkbox.label}
+                                                <small className="d-block text-body-secondary">{checkbox.description}</small>
+                                            </span>
+                                        </label>
+                                    ))}
+                                </div>
+                            </FormGroup>
+
+                            <FormGroup controlId="radios">
+                                <FormLabel>Radios:</FormLabel>
+                                <div className="list-group">
+                                    {radios.map((radio, index) => (
+                                        <label key={index} className="list-group-item d-flex gap-2">
+                                            <input
+                                                className="form-check-input flex-shrink-0"
+                                                type="radio"
+                                                name="radio"
+                                                value={radio.label}
+                                                checked={form.radio === radio.label}
+                                                onChange={handleChange}
+                                            />
+                                            <span>
+                                                {radio.label}
+                                                <small className="d-block text-body-secondary">{radio.description}</small>
+                                            </span>
+                                        </label>
+                                    ))}
+                                </div>
+                            </FormGroup>
+                        </div>
+                        <Button type="submit" variant="primary">
+                            Générer le client
+                        </Button>
+                        <Button type="reset" variant="danger" className="ms-2">
+                            Annuler
+                        </Button>
+                    </Form>
+                )}
+                <Card className="mt-3">
+                    <Card.Header>Résultat pour leszzz</Card.Header>
+                    <Card.Body>
+                        <pre className="m-0">{JSON.stringify(form, null, 2)}</pre>
+                    </Card.Body>
+                </Card>
+            </div>
+        </>
     );
 }
 
