@@ -16,6 +16,7 @@ html,
 
 #sidebar {
   z-index: 1000 !important;
+  top: 0px !important;
   left: 0px;
   position: fixed;
   display: flex;
@@ -119,10 +120,28 @@ html,
   width: 280px;
 }
 
-@media (max-width: 1300px) {
-  #sidebar-element {
-    width: 227px !important;
-  }
+
+.rows {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  position: relative;
+}
+
+.col {
+  height: fit-content;
+  padding: 1rem;
+}
+
+.col--left {
+  width: 280px;
+  max-width: 100%;
+  position: sticky;
+
+  top: 0;
+}
+
+.col--right {
+  margin-top: 0;
 }
 
 @media (max-width: 991.98px) {
@@ -130,60 +149,9 @@ html,
     width: auto !important;
   }
 
-  #sidebar-collapse {
-    z-index: 1000 !important;
-    left: 0px;
-    position: fixed;
-    display: flex !important;
-    flex-wrap: nowrap;
-    height: 100vh;
-    height: -webkit-fill-available;
-    max-height: 100vh;
-
-  }
-
-  #user {
-    display: none;
-  }
-
-  #sidebar {
-    visibility: hidden;
-  }
-
-
-}
-
-@media (max-width: 320px) {
-  #sidebar-collapse {
-    display: none !important;
-  }
-
-  #user {
-    display: none;
-  }
-
-  #sidebar {
-    visibility: hidden;
-  }
-
-
-}
-
-@media (max-width: 600px) {
-  #sidebar-collapse {
-    display: none !important;
-  }
-
-  #user {
-    display: none !important;
-  }
-
-  #sidebar {
-    visibility: hidden;
-  }
-
   #header {
     z-index: 1000 !important;
+    top: 0px !important;
     left: 0px !important;
     right: 0px !important;
     position: fixed !important;
@@ -192,5 +160,19 @@ html,
     max-height: 4.5rem;
   }
 
+  .col--left {
+    width: 0px;
+    max-width: 100%;
+    top: 0;
+    padding: 0;
+  }
+
+  .col--right {
+    margin-top: 4.5rem;
+  }
+
+  #sidebar {
+    visibility: hidden;
+  }
 
 }

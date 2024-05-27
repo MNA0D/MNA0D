@@ -19,23 +19,31 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="*" element={
                     <>
-                        <div className='container'>
-                            <div className="row">
+                        <div class="rows g-0">
+                            <nav id="left" class="col col--left">
                                 <Sidebar />
-                                <div className="col-md-9">
+                            </nav>
+                            <main id="right" class="col col--right">
+                                <Routes>
+                                    <Route path="/features" element={<Features />} />
+                                    <Route path="/list" element={<Table />} />
+                                    <Route path="/documentation" element={<Documentation />} />
+                                    <Route path="/new-client" element={<NewClient />} />
+                                    <Route path="/dashboard" element={<Dasboard />} />
+                                    <Route path="/" element={<Home />} /> Default route
+                                </Routes>
+                            </main>
+                        </div>
+                        {/* <div className='container'>
+                            <div className="row">
+                               
+                                <div className="col-md-9"> */}
 
-                                    <Routes>
-                                        <Route path="/features" element={<Features />} />
-                                        <Route path="/list" element={<Table />} />
-                                        <Route path="/documentation" element={<Documentation />} />
-                                        <Route path="/new-client" element={<NewClient />} />
-                                        <Route path="/dashboard" element={<Dasboard />} />
-                                        <Route path="/" element={<Home />} /> {/* Default route */}
-                                    </Routes>
-                                </div>
+
+                        {/* </div>
                             </div>
                         </div>
-                        <Footer />
+                        <Footer /> */}
                     </>
                 } />
             </Routes>
