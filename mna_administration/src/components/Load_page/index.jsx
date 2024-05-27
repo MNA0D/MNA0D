@@ -32,9 +32,10 @@ function App() {
                                     <Route path="/dashboard" element={<Dasboard />} />
                                     <Route path="/" element={<Dasboard />} /> Default route
                                 </Routes>
+                                <Footer />
                             </main>
                         </div>
-                        <Footer />
+
                     </>
                 } />
             </Routes>

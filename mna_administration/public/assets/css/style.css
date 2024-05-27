@@ -149,6 +149,11 @@ footer {
     right: 0px !important;
     flex-shrink: 0;
     bottom: 0px !important;
+    position: relative;
+    width: -moz-available;
+    margin-left: -12px;
+    margin-right: -12px;
+    top: 12px;
 }
 
 
@@ -157,6 +162,6 @@ footer {
 }
 
 #footer-bg-section-2 {
-    background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+    background-color: rgb(66, 82, 119);
     color: #ffffff;
 }

@@ -8,24 +8,25 @@ function Sidebar() {
     <>
       <link href="/assets/css/sidebars.css" rel="stylesheet"></link>
 
-
       <main>
-        <header className="d-flex justify-content-center py-3 bg-dark" id="header" style={{ display: 'none' }}>
+        <header className="d-flex justify-content-center py-3 " id="header" style={{ display: 'none' }}>
           <ul className="nav nav-pills">
-            <li className="nav-item"><NavLink to="/dashboard" className="nav-link">Dashboard</NavLink></li>
-            <li className="nav-item"><NavLink to="/new-client" className="nav-link">Nouveau</NavLink></li>
-            <li className="nav-item"><NavLink to="/documentation" className="nav-link">Documentation</NavLink></li>
+            <li className="nav-item"><NavLink to="/dashboard" className="nav-link text-white">Dashboard</NavLink></li>
+            <li className="nav-item"><NavLink to="/new-client" className="nav-link text-white">Nouveau</NavLink></li>
+            <li className="nav-item"><NavLink to="/documentation" className="nav-link text-white">Documentation</NavLink></li>
             <li className="nav-item"><User /></li>
           </ul>
         </header>
       </main>
 
       <main id="sidebar">
-        <div className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style={{ width: '230px' }} id="sidebar-element">
-          <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-            <p className="me-2"></p>
-            <span className="fs-4">MNA0D</span>
-          </a>
+        <div className="d-flex flex-column flex-shrink-0 p-3 text-white " style={{ width: '230px' }} id="sidebar-element">
+          <div className="image-container">
+            <img src="/assets/image/logo.png" alt="Your Image" className="centered-image" />
+          </div>
+          <div className='text-center'>
+            <span className="fs-4"><span className='color-mna'>MNA</span>0D Administration</span>
+          </div>
           <hr />
           <ul className="nav nav-pills flex-column mb-auto">
             <li>
@@ -45,7 +46,7 @@ function Sidebar() {
             </li>
           </ul>
           <hr />
-          <div className="dropdown">
+          <div className="nav-item">
             <User />
           </div>
         </div>

@@ -41,13 +41,17 @@ function Dashboard() {
         </Col>
       </Row>
 
-      <Row className="mb-4">
+      <p></p> {/* <== Im SO SORRY FOR THAT but im tired ... i will finish it later */}
+
+      <Row>
         <Col md={12}>
           <Card className="p-3">
             <RegionBarChart />
           </Card>
         </Col>
       </Row>
+
+
 
 
     </Container>
