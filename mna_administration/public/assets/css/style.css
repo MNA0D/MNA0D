@@ -137,21 +137,26 @@ table {
 
 .no-line {
     text-decoration: none;
+    color: #000;
 }
 
 .no-line:hover {
     opacity: 0.8;
 }
 
-#footer {
-    width: auto !important;
-    max-width: 100% !important;
-    padding: 0 15px !important;
-
+footer {
+    left: 0px !important;
+    right: 0px !important;
+    flex-shrink: 0;
+    bottom: 0px !important;
 }
 
-/* * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-} */
+
+#footer-bg-section-1 {
+    background-color: rgb(247, 246, 246);
+}
+
+#footer-bg-section-2 {
+    background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+    color: #ffffff;
+}

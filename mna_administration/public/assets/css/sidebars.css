@@ -6,13 +6,14 @@
 html {
   height: -webkit-fill-available;
 } */
-body,
+/* body,
 html,
 .container-fluid,
 .row b-example-divider {
   overflow-x: hidden;
   width: 100%;
-}
+} */
+#sidebar-w {}
 
 #sidebar {
   z-index: 1000 !important;
@@ -26,15 +27,13 @@ html,
   max-height: 100vh;
   overflow-x: auto;
   overflow-y: hidden;
+  font-size: 1.3rem !important;
 }
 
 .b-example-divider {
-  position: absolute;
   left: 0px !important;
   right: 0px !important;
   flex-shrink: 0;
-  width: 1.5rem;
-  height: 100vh;
   background-color: rgba(0, 0, 0, .1);
   border: solid rgba(0, 0, 0, .15);
   border-width: 1px 0;
@@ -117,7 +116,7 @@ html,
 }
 
 #sidebar-element {
-  width: 280px;
+  width: 230px !important;
 }
 
 
@@ -133,10 +132,9 @@ html,
 }
 
 .col--left {
-  width: 280px;
+  width: 230px;
   max-width: 100%;
   position: sticky;
-
   top: 0;
 }
 
@@ -150,7 +148,8 @@ html,
   }
 
   #header {
-    z-index: 1000 !important;
+    opacity: 0.98 !important;
+    z-index: 999 !important;
     top: 0px !important;
     left: 0px !important;
     right: 0px !important;
@@ -158,6 +157,8 @@ html,
     display: flex !important;
     flex-wrap: nowrap !important;
     max-height: 4.5rem;
+    width: 100%;
+    padding: 1rem;
   }
 
   .col--left {
@@ -168,6 +169,7 @@ html,
   }
 
   .col--right {
+    z-index: -1 !important;
     margin-top: 4.5rem;
   }
 

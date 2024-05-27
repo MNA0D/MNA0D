@@ -1,0 +1,15 @@
+.custom-icon {
+    background: transparent;
+    border: none;
+}
+
+.custom-icon .fas {
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    font-size: 24px;
+    color: red;
+}
+
+.leaflet-popup-content-wrapper {
+    max-width: 300px;
+}

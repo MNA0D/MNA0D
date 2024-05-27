@@ -1,17 +1,18 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import ReactDOM from 'react-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+
+
 
 import Footer from "../Footer";
 import Sidebar from "../Sidebar";
 import Login from "../Login";
 import Features from "../Features";
-import Table from "../Table";
 import Documentation from '../Documentation';
 import NewClient from '../New_client';
 import Dasboard from '../Dashboard';
-import Home from '../Home';
 function App() {
     return (
         <Router>
@@ -26,24 +27,14 @@ function App() {
                             <main id="right" class="col col--right">
                                 <Routes>
                                     <Route path="/features" element={<Features />} />
-                                    <Route path="/list" element={<Table />} />
                                     <Route path="/documentation" element={<Documentation />} />
                                     <Route path="/new-client" element={<NewClient />} />
                                     <Route path="/dashboard" element={<Dasboard />} />
-                                    <Route path="/" element={<Home />} /> Default route
+                                    <Route path="/" element={<Dasboard />} /> Default route
                                 </Routes>
                             </main>
                         </div>
-                        {/* <div className='container'>
-                            <div className="row">
-                               
-                                <div className="col-md-9"> */}
-
-
-                        {/* </div>
-                            </div>
-                        </div>
-                        <Footer /> */}
+                        <Footer />
                     </>
                 } />
             </Routes>
