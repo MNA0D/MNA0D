@@ -32,11 +32,11 @@ const ToastContainer = () => {
             {toasts.map((toast) => {
                 switch (toast.type) {
                     case 'text':
-                        return <ToastSimpleText key={toast.id} message={toast.message} background={toast.background} onClose={() => removeToast(toast.id)} />;
+                        return <ToastSimpleText key={toast.id} message={toast.message} background={toast.background} date={toast.date} onClose={() => removeToast(toast.id)} />;
                     case 'notification':
-                        return <ToastNotification key={toast.id} message={toast.message} background={toast.background} onClose={() => removeToast(toast.id)} />;
+                        return <ToastNotification key={toast.id} message={toast.message} background={toast.background} date={toast.date} onClose={() => removeToast(toast.id)} />;
                     case 'action':
-                        return <ToastAction key={toast.id} message={toast.message} background={toast.background} onClose={() => removeToast(toast.id)} onAction={() => handleAction(toast.id)} />;
+                        return <ToastAction key={toast.id} message={toast.message} background={toast.background} date={toast.date} onClose={() => removeToast(toast.id)} onAction={() => handleAction(toast.id)} />;
                     default:
                         return null;
                 }

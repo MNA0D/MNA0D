@@ -3,62 +3,82 @@
         {
             "id": "1",
             "type": "text",
+            "title": "Simple Text",
             "message": "Simple Text Toast",
-            "background": "bg-primary"
+            "background": "bg-primary",
+            "date": "2024-05-27T08:30:00Z"
         },
         {
             "id": "2",
             "type": "notification",
+            "title": "Notification",
             "message": "Notification Toast",
-            "background": "bg-warning"
+            "background": "bg-warning",
+            "date": "2024-05-27T08:45:00Z"
         },
         {
             "id": "3",
             "type": "action",
+            "title": "Action Required",
             "message": "Action Required",
-            "background": "bg-success"
+            "background": "bg-success",
+            "date": "2024-05-27T09:00:00Z"
         },
         {
             "id": "4",
             "type": "text",
+            "title": "Another Text",
             "message": "Another Simple Text Toast",
-            "background": "bg-secondary"
+            "background": "bg-secondary",
+            "date": "2024-05-27T09:15:00Z"
         },
         {
             "id": "5",
             "type": "notification",
+            "title": "Another Notification",
             "message": "Another Notification",
-            "background": "bg-info"
+            "background": "bg-info",
+            "date": "2024-05-27T09:30:00Z"
         },
         {
             "id": "6",
             "type": "action",
+            "title": "Attention Needed",
             "message": "Need Your Attention",
-            "background": "bg-light"
+            "background": "bg-light",
+            "date": "2024-05-27T09:45:00Z"
         },
         {
             "id": "7",
             "type": "text",
+            "title": "More Text",
             "message": "More Simple Text Toast",
-            "background": "bg-dark"
+            "background": "bg-dark",
+            "date": "2024-05-27T10:00:00Z"
         },
         {
             "id": "8",
             "type": "notification",
+            "title": "Important Notification",
             "message": "Important Notification",
-            "background": "bg-danger"
+            "background": "bg-danger",
+            "date": "2024-05-27T10:15:00Z"
         },
         {
             "id": "9",
             "type": "action",
+            "title": "Immediate Action",
             "message": "Immediate Action Required",
-            "background": "bg-primary"
+            "background": "bg-primary",
+            "date": "2024-05-27T10:30:00Z"
         },
         {
             "id": "10",
             "type": "text",
+            "title": "Yet Another Text",
             "message": "Yet Another Text Toast",
-            "background": "bg-white"
+            "background": "bg-white",
+            "date": "2024-05-27T10:45:00Z"
         }
     ]
 }
