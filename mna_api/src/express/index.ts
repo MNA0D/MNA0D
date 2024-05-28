@@ -1,12 +1,13 @@
+import dotenv from 'dotenv';
 import express from 'express';
 import { router, initializeRoutes } from './routes';
-
 import responseTimeMiddleware from './middleware/responseTime';
+
+dotenv.config();
 
 const run = async () => {
     const app = express();
-    const port = 3000;
-
+    const port = process.env.PORT_API || 3000;
     app.use(express.json());
 
     app.use(responseTimeMiddleware);
