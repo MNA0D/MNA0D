@@ -12,7 +12,7 @@ const ToastNotification = ({ title, message, background, date, onClose }) => {
                 <strong className="me-auto">{title}</strong>
                 <small className="text-muted">{timeAgo}</small>
                 <button type="button" className="btn-close" onClick={onClose} aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true"></span>
                 </button>
             </div>
             <div className="toast-body">

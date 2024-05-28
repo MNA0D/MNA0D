@@ -1,32 +1,38 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, useLocation } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 import Footer from '../Footer';
 import Sidebar from '../Sidebar';
-import Login from '../Login';
-import Features from '../Features';
-import Documentation from '../Documentation';
-import NewClient from '../New_client';
-import Dashboard from '../Dashboard';
-import NotFound from '../ERR@R/404';
-import Forbidden from '../ERR@R/403';
 import Loading from '../Loading'; // Import du composant de chargement
-import ToastContainer from '../Toast'; // Import du composant de conteneur de toasts
+import ToastContainer from '../Toast'; // Import du conteneur de toasts
+import AppRoutes from '../AppRoutes';
 
-const AppRoutes = () => (
-    <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/features" element={<Features />} />
-        <Route path="/documentation" element={<Documentation />} />
-        <Route path="/new-client" element={<NewClient />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/403" element={<Forbidden />} />
-        <Route path="*" element={<NotFound />} />
-    </Routes>
-);
+const AppContent = () => {
+    const location = useLocation();
+
+    const isLoginPage = location.pathname === '/login';
+
+    if (isLoginPage) {
+        return <AppRoutes />;
+    }
+
+    return (
+        <>
+            <div className="rows g-0">
+                <nav id="left" className="col col--left">
+                    <Sidebar />
+                </nav>
+                <main id="right" className="col col--right">
+                    <AppRoutes />
+                    <Footer />
+                    <ToastContainer /> {/* Ajout du conteneur de toasts */}
+                </main>
+            </div>
+        </>
+    );
+};
 
 function App() {
     const [loading, setLoading] = useState(true);
@@ -47,16 +53,7 @@ function App() {
         <Router>
             {loading && <Loading />}
             <div className={loading ? 'loading-overlay' : ''}>
-                <div className="rows g-0">
-                    <nav id="left" className="col col--left">
-                        <Sidebar />
-                    </nav>
-                    <main id="right" className="col col--right">
-                        <AppRoutes />
-                        <Footer />
-                        <ToastContainer /> {/* Ajout du conteneur de toasts */}
-                    </main>
-                </div>
+                <AppContent />
             </div>
         </Router>
     );
