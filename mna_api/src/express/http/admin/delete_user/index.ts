@@ -6,12 +6,12 @@ export default {
     method: "DELETE",
     description: "Delete user route",
     route: async (req: Request, res: Response) => {
-        const { user, mail, id }: { user?: string; mail?: string; id: string } = req.body;
+        const { user, mail, userId }: { user?: string; mail?: string; userId: string } = req.body;
 
         try {
             // Vérifiez si l'utilisateur admin existe et est admin
 
-            const admin = await User.findOne({ _id: id, admin: true });
+            const admin = await User.findOne({ _id: userId, admin: true });
             if (!admin) {
                 res.status(403).json({ success: false, error: "Unauthorized: Admin privileges required" });
                 return;
@@ -36,7 +36,7 @@ export default {
 
 /*
 {
-    "id":"66565c60dbed6a0ebc0d618c",
+    "userId":"66565c60dbed6a0ebc0d618c",
     "user": "newuser",
     "password": "securepassword",
     "mail": "newuser@example.com"

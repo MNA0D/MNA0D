@@ -9,7 +9,7 @@ export default {
     description: "User create route",
     route: async (req: Request, res: Response) => {
         const { user, mail }: { user: string; mail: string } = req.body;
-        const adminId: string = req.body.id;
+        const adminId: string = req.body.userId;
 
         try {
             // Vérifiez si l'utilisateur admin existe et est admin
@@ -42,7 +42,7 @@ export default {
 };
 /*
 {
-    "id":"66565c60dbed6a0ebc0d618c",
+    "userId":"66565c60dbed6a0ebc0d618c",
     "user": "newuser",
     "password": "securepassword",
     "mail": "newuser@example.com"
