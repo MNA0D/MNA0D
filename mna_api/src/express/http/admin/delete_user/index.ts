@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import User from '../../../../mongo/models/user'; // Assurez-vous que le chemin vers votre modèle est correct
+import User from '../../../../mongo/models/user';
 
 export default {
     handle: "/user-delete",
-    method: "POST",
+    method: "DELETE",
     description: "Delete user route",
     route: async (req: Request, res: Response) => {
         const { user, mail, id }: { user?: string; mail?: string; id: string } = req.body;

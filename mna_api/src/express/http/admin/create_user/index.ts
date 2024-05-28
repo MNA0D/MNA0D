@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import User from '../../../../mongo/models/user'; // Assurez-vous que le chemin vers votre modèle est correct
+import User from '../../../../mongo/models/user';
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 
