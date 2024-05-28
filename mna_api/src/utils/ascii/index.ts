@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as readline from 'readline';
+import clc from 'cli-color';
 
 const filePath = __dirname + '/ascii.txt';
 
@@ -14,7 +15,7 @@ export const front_api = async () => {
             });
 
             for await (const line of rl) {
-                console.log(line);
+                console.log(clc.red(line));
             }
         } catch (error) {
             console.error(`[╳] - Error reading file: ${error}`);

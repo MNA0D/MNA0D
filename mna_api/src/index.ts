@@ -2,6 +2,7 @@ import api from './express';
 import database from './mongo';
 
 async function main() {
+    console.clear();
     await database.run();
     await api.run();
 }
