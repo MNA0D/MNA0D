@@ -14,7 +14,7 @@ const loadRoutes = async (dir: string): Promise<void> => {
       if (handle && method && route) {
         if (typeof (router as any)[method.toLowerCase()] === 'function') {
           (router as any)[method.toLowerCase()](handle, route);
-          console.log(`[✓] - Route loaded: ${description} on ${handle} [${method.toUpperCase()}] metthod \n ↳ ${fullPath}`);
+          console.log(`\n[✓] - Route loaded: ${description} on ${handle} [${method.toUpperCase()}] method \n ↳ ${fullPath}`);
         } else {
           console.error(`[╳] - Route config is missing required properties in file ${file} \n ↳ ${fullPath}`);
         }
