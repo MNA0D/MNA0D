@@ -1,4 +1,4 @@
-# 🌟 My Express TypeScript API
+# 🌟 My Express MONGODB TypeScript API
 
 Welcome to my Express TypeScript API repository! This project is a boilerplate for building a robust and scalable API using Express and TypeScript.
 
