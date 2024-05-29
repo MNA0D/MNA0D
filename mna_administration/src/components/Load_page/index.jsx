@@ -52,6 +52,7 @@ function App() {
     return (
         <Router>
             {loading && <Loading />}
+
             <div className={loading ? 'loading-overlay' : ''}>
                 <AppContent />
             </div>

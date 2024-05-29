@@ -1,7 +1,10 @@
-export const performLogout = (navigate) => {
-    // Logique de déconnexion, par exemple, suppression du token d'authentification
-    // localStorage.removeItem('token');
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
-    // Redirection vers la page de connexion ou d'accueil
-    navigate('/login'); // Changez '/login' par la route de votre choix
+export const performLogout = (navigate) => {
+    // Supprimer le token
+    Cookies.remove('token');
+
+    // Redirection vers la page de connexion
+    navigate('/login');
 };

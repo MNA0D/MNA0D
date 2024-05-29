@@ -2,11 +2,11 @@
     "toasts": [
         {
             "id": "1",
-            "type": "text",
+            "type": "action",
             "title": "Simple Text",
             "message": "Simple Text Toast",
-            "background": "bg-primary",
-            "date": "2024-05-27T08:30:00Z"
+            "background": "bg-light",
+            "date": "2025-05-27T08:30:00Z"
         }
     ]
 }

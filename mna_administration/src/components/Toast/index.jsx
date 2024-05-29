@@ -5,21 +5,22 @@ import ToastNotification from './ToastNotification';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ToastContainer = () => {
-    return (
-        <></>
-    );
     // const [toasts, setToasts] = useState([]);
+    // const API = process.env.REACT_APP_API;
 
     // useEffect(() => {
     //     const fetchToasts = async () => {
-    //         // Remplacez ceci par votre appel API réel
-    //         const response = await fetch('http://localhost:3001/toasts');
-    //         const data = await response.json();
-    //         setToasts(data);
+    //         try {
+    //             const response = await fetch(`${API}/toast`);
+    //             const data = await response.json();
+    //             setToasts(data);
+    //         } catch (error) {
+    //             console.error("Error fetching toasts:", error);
+    //         }
     //     };
 
     //     fetchToasts();
-    // }, []);
+    // }, [API]);
 
     // const removeToast = (id) => {
     //     setToasts(toasts.filter(toast => toast.id !== id));
@@ -46,6 +47,7 @@ const ToastContainer = () => {
     //         })}
     //     </div>
     // );
+    return (<></>)
 };
 
 export default ToastContainer;

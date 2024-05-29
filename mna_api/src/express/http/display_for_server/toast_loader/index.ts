@@ -4,9 +4,10 @@ import Toast from '../../../../mongo/models/toast';
 
 export default {
     handle: "/toast",
-    method: "POST",
+    method: "GET",
     description: "Toast loader route for general users",
     route: async (req: Request, res: Response) => {
+        console.log("ok")
         const { userId }: { userId: string } = req.body;
 
         try {
