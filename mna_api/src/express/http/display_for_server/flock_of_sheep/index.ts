@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import Sheep from '../../../../mongo/models/sheep';
 import User from '../../../../mongo/models/user';
-import { cp } from 'fs';
 
 const SECRET_KEY = process.env.JWT_SECRET!;
 
