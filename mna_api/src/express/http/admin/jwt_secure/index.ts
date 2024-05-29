@@ -9,35 +9,43 @@ export default {
     method: "POST",
     description: "Route to check JWT token validity",
     route: async (req: Request, res: Response) => {
-        const authHeader = req.headers['authorization'];
+        try {
 
-        if (!authHeader) {
-            return res.status(401).json({ success: false, message: 'No token provided' });
-        }
+            const authHeader = req.headers['authorization'];
 
-        // Séparez les deux tokens
-        const tokens = authHeader.split(' ')[1].split(',');
-
-        if (tokens.length !== 2) {
-            return res.status(401).json({ success: false, message: 'Invalid token format' });
-        }
-
-        const [token, sessionid] = tokens;
-
-        // Vérifiez le token principal
-        jwt.verify(token, SECRET_KEY, async (err, decodedToken) => {
-            if (err || !decodedToken || typeof decodedToken !== 'object' || !('id' in decodedToken)) {
-                return res.status(401).json({ success: false, message: 'Failed to authenticate token' });
+            if (!authHeader) {
+                return res.status(401).json({ success: false, message: 'No token provided' });
             }
 
-            const user = await User.findById(sessionid);
+            // Séparez les deux tokens
+            const tokens = authHeader.split(' ')[1].split(',');
 
-            if (!user) {
-                return res.status(404).json({ success: false, message: 'User not found' });
+            if (tokens.length !== 2) {
+                return res.status(401).json({ success: false, message: 'Invalid token format' });
             }
 
-            res.status(200).json({ success: true, message: 'Token is valid', user: { id: user._id, mail: user.mail, admin: user.admin } });
+            const [token, sessionid] = tokens;
 
-        });
+            // Vérifiez le token principal
+            jwt.verify(token, SECRET_KEY, async (err, decodedToken) => {
+                if (err || !decodedToken || typeof decodedToken !== 'object' || !('id' in decodedToken)) {
+                    return res.status(401).json({ success: false, message: 'Failed to authenticate token' });
+                }
+
+                const user = await User.findById(sessionid).catch((err) => {
+                    return null;
+                }
+                );
+
+                if (!user) {
+                    return res.status(404).json({ success: false, message: 'User not found' });
+                }
+
+                res.status(200).json({ success: true, message: 'Token is valid', user: { id: user._id, mail: user.mail, admin: user.admin } });
+
+            });
+        } catch (error) {
+            res.status(500).json({ success: false, error: 'An error occurred while checking token validity' });
+        }
     }
 };
