@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import Sheep from '../../../../mongo/models/sheep';
 
 export default {
-    handle: "/sheep",
+    handle: "/good-sheep",
     method: "POST",
     description: "Sheep route",
     route: async (req: Request, res: Response) => {

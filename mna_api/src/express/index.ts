@@ -2,7 +2,8 @@ import dotenv from 'dotenv';
 import express from 'express';
 import { router, initializeRoutes } from './routes';
 import responseTimeMiddleware from './middleware/responseTime';
-import createDefaultAdmin from './middleware/createDefaultAdmin/'; // Assurez-vous que le chemin vers votre middleware est correct
+import createDefaultAdmin from './middleware/createDefaultAdmin/';
+import createDefaultSheep from './middleware/createDefaultSheep/';
 import clc from 'cli-color';
 import cors from 'cors';
 
@@ -21,8 +22,14 @@ const run = async () => {
     try {
         // Middleware pour charger les routes
         await initializeRoutes();
+
+        // Middleware pour créer un sheep par défaut s'il n'y en a aucun
+        await createDefaultSheep();
+
         // Middleware pour créer un administrateur par défaut s'il n'y en a aucun
         await createDefaultAdmin();
+
+
     } catch (err) {
         console.error('[╳] - Error initializing routes:', err);
         process.exit(1);

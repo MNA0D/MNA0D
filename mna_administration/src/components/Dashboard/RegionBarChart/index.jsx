@@ -1,8 +1,7 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { infectionData } from '../data';
 
-const RegionBarChart = () => {
+const RegionBarChart = ({ infectionData }) => {
     // Define all regions and their initial counts
     const regions = [
         'North America', 'South America', 'Europe', 'Asia', 'Africa', 'Australia',

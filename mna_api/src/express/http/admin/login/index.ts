@@ -16,11 +16,11 @@ export default {
         try {
             // Vérifiez si l'utilisateur existe par email ou username
             const user = await User.findOne({
-                $or: [{ mail: mailOrUsername }, { username: mailOrUsername }]
+                $or: [{ mail: mailOrUsername }, { user: mailOrUsername }]
             });
 
             if (!user) {
-                return res.status(404).json({ success: false, error: "User not found" });
+                return res.status(404).json({ success: false, error: "Erreur de connexion" });
             }
 
             // Vérifiez le mot de passe
@@ -29,19 +29,22 @@ export default {
                 return res.status(401).json({ success: false, error: "Invalid password" });
             }
 
-            // Créez un token JWT
+            // Créez le token JWT
             const token = jwt.sign(
                 { id: user._id, mail: user.mail, admin: user.admin },
                 SECRET_KEY,
                 { expiresIn: '1d' }
             );
 
+
+
             console.log(`\n ${clc.yellowBright(`[🔐] - User ${user.mail} logged in`)}`);
 
-            // Répondez avec succès et le token
+            // Répondez avec succès et les tokens
             res.status(200).json({
                 success: true,
-                token
+                token,
+                id: user._id
             });
         } catch (error) {
             res.status(500).json({ success: false, error: "An error occurred while logging in" });

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import User from '../../../../mongo/models/user';
 
 const SECRET_KEY = process.env.JWT_SECRET!;
 
@@ -7,21 +8,36 @@ export default {
     handle: "/authguard",
     method: "POST",
     description: "Route to check JWT token validity",
-    route: (req: Request, res: Response) => {
+    route: async (req: Request, res: Response) => {
         const authHeader = req.headers['authorization'];
 
         if (!authHeader) {
             return res.status(401).json({ success: false, message: 'No token provided' });
         }
 
-        const token = authHeader.split(' ')[1];
+        // Séparez les deux tokens
+        const tokens = authHeader.split(' ')[1].split(',');
 
-        jwt.verify(token, SECRET_KEY, (err, decoded) => {
-            if (err) {
+        if (tokens.length !== 2) {
+            return res.status(401).json({ success: false, message: 'Invalid token format' });
+        }
+
+        const [token, sessionid] = tokens;
+
+        // Vérifiez le token principal
+        jwt.verify(token, SECRET_KEY, async (err, decodedToken) => {
+            if (err || !decodedToken || typeof decodedToken !== 'object' || !('id' in decodedToken)) {
                 return res.status(401).json({ success: false, message: 'Failed to authenticate token' });
             }
 
-            res.status(200).json({ success: true, message: 'Token is valid', decoded });
+            const user = await User.findById(sessionid);
+
+            if (!user) {
+                return res.status(404).json({ success: false, message: 'User not found' });
+            }
+
+            res.status(200).json({ success: true, message: 'Token is valid', user: { id: user._id, mail: user.mail, admin: user.admin } });
+
         });
     }
 };

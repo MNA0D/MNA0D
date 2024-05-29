@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Form, InputGroup, FormControl, Button, Pagination, Dropdown } from 'react-bootstrap';
-import { infectionData } from '../data';
 
-function DataTable() {
+function DataTable({ infectionData }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [filter, setFilter] = useState('All');
     const [sortConfig, setSortConfig] = useState({ key: 'lastActivity', direction: 'descending' });

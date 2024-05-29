@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { infectionData } from '../data';
 import { Row, Col, Form } from 'react-bootstrap';
 
-const InfectionChart = () => {
+const InfectionChart = ({ infectionData }) => {
     const [startDate, setStartDate] = useState(new Date('2024-05-01'));
-    const [endDate, setEndDate] = useState(new Date('2024-05-07'));
+    const [endDate, setEndDate] = useState(new Date());
 
     const chartData = infectionData
         .filter(data => new Date(data.infectionDate) >= startDate && new Date(data.infectionDate) <= endDate)

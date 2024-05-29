@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import DataTable from './DataTable';
 import InfectionMap from './InfectionMap';
@@ -7,8 +7,36 @@ import RegionBarChart from './RegionBarChart';
 import InfectionChart from './InfectionChart';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Helmet } from 'react-helmet';
+import { fetchInfectionData } from './fetchInfectionData';
 
 function Dashboard() {
+  const [infectionData, setInfectionData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const data = await fetchInfectionData();
+        setInfectionData(data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
     <>
       <Helmet>
@@ -21,7 +49,7 @@ function Dashboard() {
         <Row className="mb-4">
           <Col md={12}>
             <Card className="p-3">
-              <DataTable />
+              <DataTable infectionData={infectionData} />
             </Card>
           </Col>
         </Row>
@@ -29,12 +57,12 @@ function Dashboard() {
         <Row className="mb-4">
           <Col md={6}>
             <Card className="p-3">
-              <InfectionChart />
+              <InfectionChart infectionData={infectionData} />
             </Card>
           </Col>
           <Col md={6}>
             <Card className="p-3">
-              <StatsCards />
+              <StatsCards infectionData={infectionData} />
             </Card>
           </Col>
         </Row>
@@ -42,17 +70,15 @@ function Dashboard() {
         <Row>
           <Col md={12}>
             <Card className="p-3">
-              <InfectionMap />
+              <InfectionMap infectionData={infectionData} />
             </Card>
           </Col>
         </Row>
 
-        <p></p> {/* <== Im SO SORRY FOR THAT but im tired ... i will finish it later */}
-
         <Row>
           <Col md={12}>
             <Card className="p-3">
-              <RegionBarChart />
+              <RegionBarChart infectionData={infectionData} />
             </Card>
           </Col>
         </Row>

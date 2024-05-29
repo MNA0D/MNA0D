@@ -1,8 +1,7 @@
 import React from 'react';
 import { Row, Col, Card } from 'react-bootstrap';
-import { infectionData } from '../data';
 
-function StatsCards() {
+function StatsCards({ infectionData }) {
     // Calculer le nombre total d'infections
     const totalInfections = infectionData.length;
 

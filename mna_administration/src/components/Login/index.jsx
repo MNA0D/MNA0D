@@ -18,13 +18,14 @@ function Login() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ mailOrUsername: email, password })
       });
 
       if (response.ok) {
         const data = await response.json();
-        // Créez un cookie avec les informations de l'utilisateur
+        // Créez des cookies avec les informations de l'utilisateur
         Cookies.set('token', data.token, { expires: 1 }); // Expire dans 1 jour
+        Cookies.set('sessionid', data.id, { expires: 1 }); // Expire dans 1 jour
         // Redirigez l'utilisateur vers la page d'accueil ou une autre page
         window.location.href = '/';
       } else {

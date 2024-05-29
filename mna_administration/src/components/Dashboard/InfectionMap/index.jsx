@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { infectionData } from '../data';
 import L from 'leaflet';
 import './custom-marker.css';
 
@@ -28,7 +27,7 @@ const customIcon = new L.DivIcon({
     popupAnchor: [0, -40],
 });
 
-function InfectionMap() {
+function InfectionMap({ infectionData }) {
     return (
         <>
             <h2 className="text-center mb-4">Carte des Infections</h2>

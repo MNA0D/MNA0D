@@ -1,3 +1,4 @@
+// src/AuthGuard.jsx
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
@@ -9,9 +10,10 @@ const AuthGuard = ({ children }) => {
     useEffect(() => {
         const verifyToken = async () => {
             try {
-
                 const token = Cookies.get('token');
-                if (!token) {
+                const sessionid = Cookies.get('sessionid');
+
+                if (!token || !sessionid) {
                     setIsAuthenticated(false);
                     return;
                 }
@@ -19,7 +21,7 @@ const AuthGuard = ({ children }) => {
                 const response = await fetch(`${process.env.REACT_APP_API}/authguard`, {
                     method: 'POST',
                     headers: {
-                        'Authorization': `Bearer ${token}`
+                        'Authorization': `Bearer ${token},${sessionid}`
                     }
                 });
 
