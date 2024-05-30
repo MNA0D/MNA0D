@@ -30,29 +30,27 @@ Action => Avec deux boutons (ignoré et Confirmer)
 Notification => Simple notification
 Text => Simple texte
 */
-
 import { Request, Response } from 'express';
-import User from '../../../../mongo/models/user';
 import Toast from '../../../../mongo/models/toast';
+
 export default {
     handle: "/toast-create",
     method: "POST",
     description: "Toast create route",
     route: async (req: Request, res: Response) => {
-        const { userId, toastDetails }: { userId: string; toastDetails: any } = req.body;
-
         try {
-            // Vérifiez si l'utilisateur qui fait la demande existe et est admin
-            const user = await User.findById(userId);
-            if (!user || !user.admin) {
-                res.status(403).json({ success: false, error: "Unauthorized: Admin privileges required" });
-                return;
-            }
+            if (!res.locals.auth || !res.locals.auth.cookie.auth) return res.status(401).json({ success: false, message: 'No token provided' });
+            if (!res.locals.auth.user) return res.status(404).json({ success: false, error: "User not found" });
+            if (!res.locals.auth.user.admin) return res.status(403).json({ success: false, error: "Admin access required" });
+
+            //Vérifiez si les détails du toast sont fournis
+            const { toastDetails }: { toastDetails: any } = req.body;
+            if (!toastDetails) return res.status(400).json({ success: false, error: "No toast details provided" });
 
             // Créez un nouveau toast
             const newToast = new Toast({
                 ...toastDetails,
-                date: new Date(toastDetails.date) // Assurez-vous que la date est bien formatée
+                date: new Date(toastDetails.date) // Vérifier que la date est bien formatée
             });
 
             await newToast.save();
@@ -65,8 +63,6 @@ export default {
 };
 /*
 Exemple de requête:
-{
-    "userId": "66565c60dbed6a0ebc0d618c",
     "toastDetails": {
         "id": "1",
         "type": "action",

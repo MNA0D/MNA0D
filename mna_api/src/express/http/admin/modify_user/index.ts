@@ -7,34 +7,21 @@ export default {
     method: "POST",
     description: "User modify route",
     route: async (req: Request, res: Response) => {
-        const { userId, newUserDetails }: { userId: string; newUserDetails: any } = req.body;
-        const requesterId: string = req.body.requesterId;
-
         try {
-            // Vérifiez si l'utilisateur qui fait la demande existe
-            const requester = await User.findById(requesterId);
-            if (!requester) {
-                res.status(403).json({ success: false, error: "Unauthorized: Requester not found" });
-                return;
-            }
+            if (!res.locals.auth || !res.locals.auth.cookie.auth) return res.status(401).json({ success: false, message: 'No token provided' });
+            if (!res.locals.auth.user) return res.status(404).json({ success: false, error: "User not found" });
 
-            // Vérifiez si l'utilisateur qui fait la demande est admin ou si c'est le même utilisateur que celui à modifier
-            if (!requester.admin && requesterId !== userId) {
-                res.status(403).json({ success: false, error: "Unauthorized: Admin privileges or ownership required" });
-                return;
-            }
+            const { newUserDetails }: { newUserDetails: any } = req.body;
 
             // Vérifiez si l'utilisateur à modifier existe
-            const userToModify = await User.findById(userId);
-            if (!userToModify) {
-                res.status(404).json({ success: false, error: "User to modify not found" });
-                return;
-            }
+            const userToModify = await User.findById(res.locals.auth.user._id).catch(() => null);
+            if (!userToModify) return res.status(404).json({ success: false, error: "User to modify not found" });
+
+            //Vérifiez si l'utilisateur est admin || Vérifiez si l'utilisateur à modifier
+            if (!res.locals.auth.user.admin) if (!userToModify) return res.status(404).json({ success: false, error: "User to modify not found" });
 
             // Mettre à jour les détails de l'utilisateur
-            if (newUserDetails.password) {
-                newUserDetails.password = await bcrypt.hash(newUserDetails.password, 10);
-            }
+            if (newUserDetails.password) newUserDetails.password = await bcrypt.hash(newUserDetails.password, 10);
 
             Object.assign(userToModify, newUserDetails);
             await userToModify.save();

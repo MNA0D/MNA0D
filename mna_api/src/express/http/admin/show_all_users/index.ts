@@ -1,22 +1,21 @@
 import { Request, Response } from 'express';
-import Sheep from '../../../../mongo/models/sheep';
+import User from '../../../../mongo/models/user';
 
 export default {
-    handle: "/flock-of-sheep",
+    handle: "/all-users",
     method: "GET",
-    description: "Route to get all sheep data",
+    description: "Route to get all users informations for admin",
     route: async (req: Request, res: Response) => {
         try {
             if (!res.locals.auth || !res.locals.auth.cookie.auth) return res.status(401).json({ success: false, message: 'No token provided' });
             if (!res.locals.auth.user) return res.status(404).json({ success: false, error: "User not found" });
 
-            // Récupérez tous les sheep
-            const sheep = await Sheep.find().catch(() => null);
-            if (!sheep) return res.status(404).json({ success: false, error: "No sheep found" });
+            // Récupérer tous les utilisateurs
+            const users = await User.find().catch(() => null);
+            if (!users) return res.status(404).json({ success: false, error: "No users found" });
 
             // Renvoyez les détails des sheep
-            res.status(200).json({ success: true, sheep });
-
+            res.status(200).json({ success: true, users });
         } catch (error) {
             res.status(500).json({ success: false, error: "An error occurred while retrieving the sheep" });
         }

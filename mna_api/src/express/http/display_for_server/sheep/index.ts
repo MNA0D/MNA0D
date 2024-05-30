@@ -14,29 +14,23 @@ Region:
 */
 import { Request, Response } from 'express';
 import Sheep from '../../../../mongo/models/sheep';
-import User from '../../../../mongo/models/user';
 
 export default {
     handle: "/sheep-view",
     method: "GET",
     description: "Sheep view route",
     route: async (req: Request, res: Response) => {
-        const { userId, sheepId }: { userId: string; sheepId: string } = req.body;
-
         try {
-            // Vérifiez si l'utilisateur existe
-            const user = await User.findById(userId);
-            if (!user) {
-                res.status(404).json({ success: false, error: "User not found" });
-                return;
-            }
+            if (!res.locals.auth || !res.locals.auth.cookie.auth) return res.status(401).json({ success: false, message: 'No token provided' });
+            if (!res.locals.auth.user) return res.status(404).json({ success: false, error: "User not found" });
+
+            // Vérifiez si les détails du Sheep sont fournis
+            const { sheepId }: { sheepId: string } = req.body;
+            if (!sheepId) return res.status(400).json({ success: false, error: "No sheepId provided" });
 
             // Vérifiez si le Sheep existe
-            const sheep = await Sheep.findById(sheepId);
-            if (!sheep) {
-                res.status(404).json({ success: false, error: "Sheep not found" });
-                return;
-            }
+            const sheep = await Sheep.findById(sheepId).catch(() => null);
+            if (!sheep) return res.status(404).json({ success: false, error: "Sheep not found" });
 
             // Renvoyez les détails du Sheep
             res.status(200).json({ success: true, sheep });

@@ -1,11 +1,12 @@
 import dotenv from 'dotenv';
 import express from 'express';
-import { router, initializeRoutes } from './routes';
-import responseTimeMiddleware from './middleware/responseTime';
-import createDefaultAdmin from './middleware/createDefaultAdmin/';
-import createDefaultSheep from './middleware/createDefaultSheep/';
 import clc from 'cli-color';
 import cors from 'cors';
+import { router, initializeRoutes } from './routes';
+import responseTimeMiddleware from './middleware/responseTime/';
+import createDefaultAdmin from './middleware/createDefaultAdmin/';
+import createDefaultSheep from './middleware/createDefaultSheep/';
+import authGuard from './middleware/authGuard/';
 
 dotenv.config();
 
@@ -17,6 +18,11 @@ const run = async () => {
 
     // Middleware pour mesurer le temps de réponse
     app.use(responseTimeMiddleware);
+
+    // Middleware pour vérifier l'authentification
+    app.use(authGuard);
+
+    // Middleware pour autoriser les requêtes cross-origin
     app.use(cors());
 
     try {

@@ -11,23 +11,16 @@ export default {
     method: "POST",
     description: "Login route",
     route: async (req: Request, res: Response) => {
-        const { mailOrUsername, password }: { mailOrUsername: string; password: string } = req.body;
-
         try {
-            // Vérifiez si l'utilisateur existe par email ou username
-            const user = await User.findOne({
-                $or: [{ mail: mailOrUsername }, { user: mailOrUsername }]
-            });
+            const { mailOrUsername, password }: { mailOrUsername: string; password: string } = req.body;
 
-            if (!user) {
-                return res.status(404).json({ success: false, error: "Erreur de connexion" });
-            }
+            // Vérifiez si l'utilisateur existe par email ou username
+            const user = await User.findOne({ $or: [{ mail: mailOrUsername }, { user: mailOrUsername }] }).catch(() => null);
+            if (!user) return res.status(404).json({ success: false, error: "Erreur de connexion" });
 
             // Vérifiez le mot de passe
             const validPassword = await bcrypt.compare(password, user.password);
-            if (!validPassword) {
-                return res.status(401).json({ success: false, error: "Invalid password" });
-            }
+            if (!validPassword) return res.status(401).json({ success: false, error: "Invalid password" });
 
             // Créez le token JWT
             const token = jwt.sign(
@@ -35,8 +28,6 @@ export default {
                 SECRET_KEY,
                 { expiresIn: '1d' }
             );
-
-
 
             console.log(`\n ${clc.yellowBright(`[🔐] - User ${user.mail} logged in`)}`);
 
