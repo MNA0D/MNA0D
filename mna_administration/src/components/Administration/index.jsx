@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, InputGroup, Button } from 'react-bootstrap';
+import { Form, Col, Row, InputGroup, Button } from 'react-bootstrap';
 import { Helmet } from 'react-helmet';
 import DataTableFlock from './DataTableFlock';
 import DataTableUser from './DataTableUser';
@@ -10,6 +10,7 @@ import { fetchToastData } from './FetchToastData';
 import { fetchCreateUser } from './FetchCreateUser';
 import updateUser from './FetchUpdateUser';
 import deleteUser from './FetchDeleteUser';
+import FetchToastCreate from './FetchToastCreate';
 
 function Administration() {
     const [sheepData, setSheepData] = useState([]);
@@ -19,6 +20,93 @@ function Administration() {
     const [error, setError] = useState(null);
     const [selectedUser, setSelectedUser] = useState(null);
     const [formData, setFormData] = useState({ user: '', mail: '', admin: false });
+
+    const [type, setType] = useState('text');
+    const [title, setTitle] = useState('');
+    const [message, setMessage] = useState('');
+    const [background, setBackground] = useState('bg-light');
+
+    const [selectedToast, setSelectedToast] = useState(null);
+
+    const backgrounds = [
+        "bg-primary", "bg-secondary", "bg-success", "bg-danger", "bg-warning",
+        "bg-info", "bg-light", "bg-dark", "bg-body", "bg-white", "bg-transparent"
+    ];
+
+    const handleToastSubmit = async (e) => {
+        e.preventDefault();
+
+        const toastData = {
+            type,
+            title,
+            message,
+            background
+        };
+
+        await FetchToastCreate(toastData);
+    };
+
+    const renderNotificationPreview = () => {
+        const commonClasses = `toast show ${background}`;
+        const timeAgo = "Just now"; // Replace with your actual time ago logic
+        const onClose = () => console.log('Close'); // Replace with your actual close handler
+        const onAction = () => console.log('Action'); // Replace with your actual action handler
+
+        if (type === 'text') {
+            return (
+                <div className={commonClasses} role="alert" aria-live="assertive" aria-atomic="true">
+                    <div className="toast-header">
+                        <img src="..." className="rounded me-2" alt="..." />
+                        <strong className="me-auto">{title}</strong>
+                        <small className="text-muted">{timeAgo}</small>
+                        <button type="button" className="btn-close" onClick={onClose} aria-label="Close"></button>
+                    </div>
+                    <div className="toast-body">
+                        {message}
+                    </div>
+                </div>
+            );
+        }
+
+        if (type === 'notification') {
+            return (
+                <div className={commonClasses} role="alert" aria-live="assertive" aria-atomic="true">
+                    <div className="toast-header">
+                        <img src="..." className="rounded me-2" alt="..." />
+                        <strong className="me-auto">{title}</strong>
+                        <small className="text-muted">{timeAgo}</small>
+                        <button type="button" className="btn-close" onClick={onClose} aria-label="Close">
+                            <span aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div className="toast-body">
+                        {message}
+                    </div>
+                </div>
+            );
+        }
+
+        if (type === 'action') {
+            return (
+                <div className={commonClasses} role="alert" aria-live="assertive" aria-atomic="true">
+                    <div className="toast-header">
+                        <img src="..." className="rounded me-2" alt="..." />
+                        <strong className="me-auto">{title}</strong>
+                        <small className="text-muted">{timeAgo}</small>
+                    </div>
+                    <div className="toast-body">
+                        {message}
+                        <div className="mt-2 pt-2 border-top">
+                            <Button type="button" className="btn btn-primary btn-sm" onClick={onAction}>Intéragir</Button>
+                            <Button type="button" className="btn btn-secondary btn-sm" onClick={onClose}>Ignoré</Button>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        return null;
+    };
 
     const getDataCreation = async () => {
         try {
@@ -152,7 +240,6 @@ function Administration() {
                         <div className="card">
                             <div className="card-header">
                                 <h5 className="card-title">Visualisation et management des utilisateurs :</h5>
-
                             </div>
                             <div className="card-body">
                                 <DataTableUser userData={userData} setSelectedUser={setSelectedUser} />
@@ -243,32 +330,10 @@ function Administration() {
 
 
                 </div>
-
-                <div className="row mb-4">
-
-                </div>
             </div>
 
             <div className="container mb-4 card">
-                <h2 className="pb-2 border-bottom">Gestion des notifications :</h2>
-
-                <div className="row mb-4 mt-4">
-                    <div className="col-sm">
-                        <div className="card">
-                            <div className="card-header">
-                                <h5 className="card-title">Crée une nouvelle notification</h5>
-                            </div>
-                            <div className="card-body">
-                                <a href="/manage-sheep" className="btn btn-success">Crée un nouvel utilisateur</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="col-sm">
-                        <p>Tronche de la notification ici</p>
-                    </div>
-                </div>
-
+                <h2 className="pb-2 border-bottom mt-4 mb-4">Gestion des sheeps :</h2>
                 <div className="row mb-4">
                     <div className="col-sm">
                         <div className="card">
@@ -276,7 +341,75 @@ function Administration() {
                                 <h5 className="card-title">Notifications en cache</h5>
                             </div>
                             <div className="card-body">
-                                <DataTableToast toastData={toastData} />
+                                <DataTableToast toastData={toastData} setToastData={setToastData} />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-sm">
+                        <div className="card">
+                            <div className="card-header">
+                                <h5 className="card-title">Création des notifications :</h5>
+                            </div>
+
+                            <div className="card-body">
+
+                                <Form onSubmit={handleToastSubmit}>
+
+                                    <Form.Group as={Row} className="mb-3">
+                                        <Form.Label column sm={2}>Type de notification :</Form.Label>
+                                        <Col sm={10}>
+                                            <Form.Select value={type} onChange={(e) => setType(e.target.value)}>
+                                                <option value="text">Text</option>
+                                                <option value="notification">Notification</option>
+                                                <option value="action">Action</option>
+                                            </Form.Select>
+                                        </Col>
+                                    </Form.Group>
+
+                                    <Form.Group as={Row} className="mb-3">
+                                        <Form.Label column sm={2}>Titre de la notification :</Form.Label>
+                                        <Col sm={10}>
+                                            <Form.Control
+                                                type="text"
+                                                value={title}
+                                                onChange={(e) => setTitle(e.target.value)}
+                                                placeholder="Enter title"
+                                            />
+                                        </Col>
+                                    </Form.Group>
+
+                                    <Form.Group as={Row} className="mb-3">
+                                        <Form.Label column sm={2}>Message de la notification</Form.Label>
+                                        <Col sm={10}>
+                                            <Form.Control
+                                                as="textarea"
+                                                value={message}
+                                                onChange={(e) => setMessage(e.target.value)}
+                                                placeholder="Enter message"
+                                            />
+                                        </Col>
+                                    </Form.Group>
+
+                                    <Form.Group as={Row} className="mb-3">
+                                        <Form.Label column sm={2}>Fond de la notification</Form.Label>
+                                        <Col sm={10}>
+                                            <Form.Select value={background} onChange={(e) => setBackground(e.target.value)}>
+                                                {backgrounds.map((bg, index) => (
+                                                    <option key={index} value={bg}>{bg}</option>
+                                                ))}
+                                            </Form.Select>
+                                        </Col>
+                                    </Form.Group>
+
+                                    <Button variant="primary" type="submit">Envoyer la notification à tout les utilisateurs !</Button>
+                                    <br></br>
+                                    <br></br>
+                                    <small className="text-muted">⚠️ Cette action est irréversible. Elle sera automatiquement supprimer après 24h.⚠️</small>
+                                    <div className="mt-4">
+                                        <h5 className="border-bottom">Visualisation des notifications :</h5>
+                                        {renderNotificationPreview()}
+                                    </div>
+                                </Form>
                             </div>
                         </div>
                     </div>

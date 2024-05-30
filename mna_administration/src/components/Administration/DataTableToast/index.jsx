@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Table, Form, InputGroup, FormControl, Button, Pagination, Dropdown } from 'react-bootstrap';
+import FetchDeleteToast from '../FetchDeleteToast';
 
-function ToastDataTable({ toastData }) {
+function ToastDataTable({ toastData, setToastData }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [filter, setFilter] = useState('All');
     const [sortConfig, setSortConfig] = useState({ key: 'date', direction: 'ascending' });
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(10);
+    const [selectedToast, setSelectedToast] = useState(null);
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
@@ -31,6 +33,13 @@ function ToastDataTable({ toastData }) {
     const handleItemsPerPageChange = (number) => {
         setItemsPerPage(number);
         setCurrentPage(1); // Reset to the first page
+    };
+
+    const handleDeleteToast = () => {
+        if (selectedToast) {
+            FetchDeleteToast(selectedToast._id, setToastData);
+            setSelectedToast(null);
+        }
     };
 
     const sortedData = [...toastData].sort((a, b) => {
@@ -110,15 +119,19 @@ function ToastDataTable({ toastData }) {
                                 Date {sortConfig.key === 'date' ? (sortConfig.direction === 'ascending' ? '↑' : '↓') : ''}
                             </Button>
                         </th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {currentItems.map((data, index) => (
-                        <tr key={index} style={{ backgroundColor: data.background }}>
+                        <tr key={data._id} style={{ backgroundColor: data.background }} onClick={() => setSelectedToast(data)}>
                             <td>{data.title}</td>
                             <td>{data.message}</td>
                             <td>{data.type}</td>
                             <td>{data.date}</td>
+                            <td>
+                                <Button variant="danger" onClick={() => handleDeleteToast(data._id)}>Supprimer</Button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

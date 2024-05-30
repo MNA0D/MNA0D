@@ -34,7 +34,7 @@ import { Request, Response } from 'express';
 import Toast from '../../../../mongo/models/toast';
 
 export default {
-    handle: "/toast-create",
+    handle: "/create-toast",
     method: "POST",
     description: "Toast create route",
     route: async (req: Request, res: Response) => {
@@ -43,14 +43,19 @@ export default {
             if (!res.locals.auth.user) return res.status(404).json({ success: false, error: "User not found" });
             if (!res.locals.auth.user.admin) return res.status(403).json({ success: false, error: "Admin access required" });
 
-            //Vérifiez si les détails du toast sont fournis
-            const { toastDetails }: { toastDetails: any } = req.body;
-            if (!toastDetails) return res.status(400).json({ success: false, error: "No toast details provided" });
+            const { type, title, message, background } = req.body;
+            console.log(req.body);
+
+            if (!type || !title || !message || !background) return res.status(400).json({ success: false, error: "All toast details must be provided" });
+
 
             // Créez un nouveau toast
             const newToast = new Toast({
-                ...toastDetails,
-                date: new Date(toastDetails.date) // Vérifier que la date est bien formatée
+                type,
+                title,
+                message,
+                background,
+                date: new Date() // Ajoutez la date actuelle
             });
 
             await newToast.save();
@@ -61,15 +66,3 @@ export default {
         }
     }
 };
-/*
-Exemple de requête:
-    "toastDetails": {
-        "id": "1",
-        "type": "action",
-        "title": "Simple Text",
-        "message": "Simple Text Toast",
-        "background": "bg-light",
-        "date": "2025-05-27T08:30:00Z"
-    }
-}
-*/
