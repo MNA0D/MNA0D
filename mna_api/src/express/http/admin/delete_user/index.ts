@@ -2,11 +2,10 @@ import { Request, Response } from 'express';
 import User from '../../../../mongo/models/user';
 
 export default {
-    handle: "/user-delete",
+    handle: "/delete-user",
     method: "DELETE",
     description: "Delete user route",
     route: async (req: Request, res: Response) => {
-
         try {
             if (!res.locals.auth || !res.locals.auth.cookie.auth) return res.status(401).json({ success: false, message: 'No token provided' });
             if (!res.locals.auth.user) return res.status(404).json({ success: false, error: "User not found" });

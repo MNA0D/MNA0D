@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ToastSimpleText from './ToastSimpleText';
 import ToastAction from './ToastAction';
 import ToastNotification from './ToastNotification';
-import Cookies from 'js-cookie'; // Assurez-vous d'installer la bibliothèque js-cookie
+import Cookies from 'js-cookie';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ToastContainer = () => {
@@ -32,7 +32,7 @@ const ToastContainer = () => {
                 }
 
                 const data = await response.json();
-                console.log("API response data:", data); // Log the response data
+                // console.log("API response data:", data); // Log the response data
                 if (data.success && Array.isArray(data.toasts)) {
                     setToasts(data.toasts);
                 } else {

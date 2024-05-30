@@ -7,7 +7,6 @@ const SECRET_KEY = process.env.JWT_SECRET!;
 const authGuard = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const authHeader = req.headers['authorization'];
-
         res.locals.auth = {}; // Initialize res.locals.auth as an empty object
 
         if (!authHeader) {

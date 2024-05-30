@@ -1,9 +1,45 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import axios from 'axios';
 import User from './user';
+import Cookies from 'js-cookie';
 
 function Sidebar() {
+  const [isAdmin, setIsAdmin] = useState(false);
+  const API = process.env.REACT_APP_API;
+
+  useEffect(() => {
+    const checkAdminStatus = async () => {
+      try {
+        const token = Cookies.get('token');
+        const sessionid = Cookies.get('sessionid');
+
+        if (!token || !sessionid) {
+          throw new Error('Tokens are missing');
+        }
+
+        const response = await axios.post(
+          `${API}/authguard-admin`,
+          {},
+          {
+            headers: {
+              'Authorization': `Bearer ${token},${sessionid}`
+            }
+          }
+        );
+
+        if (response.status === 200) {
+          setIsAdmin(true);
+        }
+      } catch (error) {
+        console.error('Error checking admin status', error);
+      }
+    };
+
+    checkAdminStatus();
+  }, [API]);
+
   return (
     <>
       <link href="/assets/css/sidebars.css" rel="stylesheet"></link>
@@ -29,6 +65,13 @@ function Sidebar() {
           </div>
           <hr />
           <ul className="nav nav-pills flex-column mb-auto">
+            {isAdmin && (
+              <li>
+                <NavLink to="/administration" className="nav-link text-white">
+                  <i className="bi me-2 bi-folder"></i> Administration
+                </NavLink>
+              </li>
+            )}
             <li>
               <NavLink to="/dashboard" className="nav-link text-white">
                 <i className="bi me-2 bi-activity"></i> Dashboard

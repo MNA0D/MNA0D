@@ -8,6 +8,7 @@ import NotFound from '../ERR@R/404';
 import Forbidden from '../ERR@R/403';
 import LoginLayout from '../Login';
 import AuthGuard from '../AuthGuard';
+import Administration from '../Administration';
 
 const AppRoutes = () => (
     <Routes>
@@ -16,6 +17,7 @@ const AppRoutes = () => (
         <Route path="/documentation" element={<AuthGuard><Documentation /></AuthGuard>} />
         <Route path="/new-client" element={<AuthGuard><NewClient /></AuthGuard>} />
         <Route path="/dashboard" element={<AuthGuard><Dashboard /></AuthGuard>} />
+        <Route path="/administration" element={<AuthGuard><Administration /></AuthGuard>} />
         <Route path="/" element={<AuthGuard><Dashboard /></AuthGuard>} />
         <Route path="/403" element={<Forbidden />} />
         <Route path="*" element={<NotFound />} />
