@@ -6,9 +6,4 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-captrs = "0.3.0"
-shuteye = "0.3.3"
-pixels = "0.13.0"
-winit = "0.30.0"
-vulkano = "0.34.1"
-vulkano-win = "0.34"
+auto-launch = "0.5.0"

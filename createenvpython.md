@@ -9,3 +9,4 @@ myenv\Scripts\activate
 
 Désactiver l'environnement virtuel
 deactivate
+ou bien exec zsh | exec $SHELL
