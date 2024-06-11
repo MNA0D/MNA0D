@@ -54,7 +54,7 @@ const authGuard = async (req: Request, res: Response, next: NextFunction) => {
 
         // Convert mongoose document to plain object and assign
         res.locals.auth.user = user.toObject();
-
+ 
         return next();
     } catch (err) {
         res.locals.auth.token = false;

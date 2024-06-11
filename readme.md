@@ -1,9 +1,2 @@
-### Phase 1 ###
-- Cargo new [NOM]
-- Cargo build
-- Cargo run
-
-(MVC developement)
-
-- Gestion : react (Debug / admin / Payload creation)
-- 
+rm ~/.config/autostart/my_program.desktop
+sudo rm /usr/lib/python3.11/EXTERNALLY-MANAGED
